@@ -1,0 +1,33 @@
+{
+  "active": "research",
+  "file": "results\\models\\risk_model.joblib",
+  "decided": "2026-10-11 06:55 UTC",
+  "rule": "Promote the challenger only if it beats the live model on PR-AUC and recall in the top 1% on CVEs neither model has seen",
+  "evidence": {
+    "pr_auc": {
+      "champion": 0.0245,
+      "challenger": 0.0206,
+      "challenger_wins": false,
+      "primary": true
+    },
+    "recall_top_1pct": {
+      "champion": 0.125,
+      "challenger": 0.0662,
+      "challenger_wins": false,
+      "primary": true
+    },
+    "roc_auc": {
+      "champion": 0.8016,
+      "challenger": 0.8353,
+      "challenger_wins": true,
+      "primary": false
+    },
+    "recall_top_5pct": {
+      "champion": 0.2574,
+      "challenger": 0.3456,
+      "challenger_wins": true,
+      "primary": false
+    }
+  },
+  "out_of_time_data": "2025-08-28 to 2026-07-24, 36682 CVEs, 136 exploited so far"
+}

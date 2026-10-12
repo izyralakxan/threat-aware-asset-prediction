@@ -1,0 +1,9 @@
+{
+  "allowed_domains": ["company.local"],
+  "allowed_addresses": ["tester@example.com"],
+  "dashboard_url": "http://localhost:8501",
+  "sender_name": "Security Team - Vulnerability Management",
+  "notify_levels": ["Critical", "High"],
+  "max_cves_listed_per_action": 5,
+  "max_cves_in_email": 10
+}

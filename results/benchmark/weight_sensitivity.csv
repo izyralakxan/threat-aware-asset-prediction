@@ -1,0 +1,5 @@
+network,devices,settings,most_urgent_unchanged,spearman_mean,spearman_min,top3_unchanged,top5_unchanged
+demo_scan_1_zentrova_systems,20,95,1.0,0.9916897506925204,0.9759398496240601,1.0,1.0
+demo_scan_2_kyvora_cloud_services,14,95,1.0,0.991347599768652,0.9868131868131869,1.0,1.0
+demo_scan_3_quantelix_data_solutions,18,95,1.0,1.0,1.0,1.0,1.0
+lab (scan-20261012-110258-full),3,95,1.0,1.0,1.0,1.0,1.0

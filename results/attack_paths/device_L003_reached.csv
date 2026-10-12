@@ -1,0 +1,11 @@
+asset_id,hostname,ip_address,segment,asset_type,crown_jewel,start,steps,probability,band,path,how
+L003,web-01,10.10.10.10,DMZ,Web Server,0,True,0,1.0,Likely,web-01,Starting point
+L001,fw-edge-01,10.10.10.1,DMZ,Firewall / SSL-VPN,0,False,1,1.0,Likely,web-01 → fw-edge-01,Exploit FortiOS via port 443 (2 known exploited)
+L002,adc-vpn-01,10.10.10.2,DMZ,Application Delivery / VPN,0,False,1,1.0,Likely,web-01 → adc-vpn-01,Exploit NetScaler ADC via port 443 (3 known exploited)
+L005,webmail-01,10.10.10.20,DMZ,Mail Server,0,False,1,0.0931946951981567,Unlikely,web-01 → webmail-01,"Exploit Roundcube Webmail via port 443 (predicted 9.3%, CVE-2026-54433)"
+L006,mft-01,10.10.10.30,DMZ,File Transfer Server,0,False,1,0.07369354340254632,Unlikely,web-01 → mft-01,"Exploit Windows Server 2022 via port 135 (predicted 7.4%, CVE-2026-69276)"
+L012,file-01,10.10.20.20,SERVERS,File Server,1,False,2,0.05895483472203705,Unlikely,web-01 → mft-01 → file-01,Service account: MOVEit service account can write to file-01 shares
+L013,sp-01,10.10.20.21,SERVERS,Intranet (SharePoint),0,False,3,0.05895483472203705,Unlikely,web-01 → mft-01 → file-01 → sp-01,Exploit SharePoint Server via port 443 (4 known exploited)
+L016,app-01,10.10.20.40,SERVERS,Application Server,0,False,1,0.04481607469743407,Unlikely,web-01 → app-01,"Exploit Apache Tomcat via port 8080 (predicted 4.5%, CVE-2026-65182)"
+L014,db-01,10.10.20.30,SERVERS,Database Server,1,False,2,0.040334467227690664,Unlikely,web-01 → app-01 → db-01,Stored credentials: app-01 holds the MySQL password for db-01
+L015,db-02,10.10.20.31,SERVERS,Database Server,1,False,2,0.040334467227690664,Unlikely,web-01 → app-01 → db-02,Stored credentials: app-01 holds the PostgreSQL password for db-02

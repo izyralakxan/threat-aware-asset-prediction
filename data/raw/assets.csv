@@ -1,0 +1,11 @@
+asset_id,hostname,ip_address,asset_type,operating_system,criticality,internet_exposed,open_ports,service_count,patch_status
+A001,web-server-01,192.168.1.10,Web Server,Ubuntu Server,High,Yes,80;443,2,Outdated
+A002,db-server-01,192.168.1.20,Database Server,Windows Server,High,No,1433,1,Partially Patched
+A003,employee-pc-01,192.168.1.30,Workstation,Windows 11,Medium,No,135;445,2,Patched
+A004,mail-server-01,192.168.1.40,Mail Server,Ubuntu Server,High,Yes,25;443,2,Outdated
+A005,backup-server-01,192.168.1.50,Backup Server,,High,No,445,1,Partially Patched
+A006,employee-pc-02,192.168.1.60,Workstation,Windows 10,Low,No,135;445,2,Outdated
+A007,internal-app-01,192.168.1.70,Application Server,Ubuntu Server,Medium,No,8080,1,Partially Patched
+A008,dns-server-01,192.168.1.80,DNS Server,Ubuntu Server,High,No,53,1,Patched
+A009,web-server-02,192.168.1.90,Web Server,Windows Server,High,Yes,80;443,2,Partially Patched
+A010,developer-pc-01,192.168.1.100,Workstation,Windows 11,Medium,No,22;3000,2,Patched

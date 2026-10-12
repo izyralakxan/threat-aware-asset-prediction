@@ -1,0 +1,54 @@
+{
+  "logistic_regression [tabular]": {
+    "params": {
+      "C": 0.01
+    },
+    "imbalance": "weighted",
+    "threshold": 0.9721202123755132,
+    "validation_pr_auc": 0.03309416813000241
+  },
+  "random_forest [tabular]": {
+    "params": {
+      "min_samples_leaf": 5
+    },
+    "imbalance": "undersampled",
+    "threshold": 0.4787493489288846,
+    "validation_pr_auc": 0.04428448674916958
+  },
+  "lightgbm [tabular]": {
+    "params": {
+      "n_estimators": 200,
+      "num_leaves": 15,
+      "min_child_samples": 100
+    },
+    "imbalance": "undersampled",
+    "threshold": 0.7204756294615431,
+    "validation_pr_auc": 0.03581850573826516
+  },
+  "logistic_regression [tabular+text]": {
+    "params": {
+      "C": 0.1
+    },
+    "imbalance": "weighted",
+    "threshold": 0.9566377825653091,
+    "validation_pr_auc": 0.06177097468080074
+  },
+  "random_forest [tabular+text]": {
+    "params": {
+      "min_samples_leaf": 20
+    },
+    "imbalance": "weighted",
+    "threshold": 0.5490574407570364,
+    "validation_pr_auc": 0.03804791172514554
+  },
+  "lightgbm [tabular+text]": {
+    "params": {
+      "n_estimators": 200,
+      "num_leaves": 31,
+      "min_child_samples": 100
+    },
+    "imbalance": "undersampled",
+    "threshold": 0.5970840370597313,
+    "validation_pr_auc": 0.05602506419862081
+  }
+}

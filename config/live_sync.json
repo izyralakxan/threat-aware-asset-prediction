@@ -1,0 +1,11 @@
+{
+  "targets": [
+    {"name": "Synthetic organisation", "db": "data/lab/lab_environment.db", "snapshot": "current"},
+    {"name": "VMware lab", "db": "data/lab/vmware_lab.db", "snapshot": "latest"}
+  ],
+  "warn_on_tiers": ["Critical"],
+  "kev_deadline_days": 14,
+  "first_sync_max_days": 120,
+  "new_cve_days": 7,
+  "retrain_after_days": 90
+}

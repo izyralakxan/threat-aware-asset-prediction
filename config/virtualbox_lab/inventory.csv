@@ -1,0 +1,5 @@
+asset_id,hostname,ip_address,asset_type,operating_system,criticality,internet_exposed
+V100,analyst-pc,192.168.56.1,Security Analyst Workstation,Windows 10,High,No
+V101,legacy-srv-01,192.168.56.101,Legacy Application & Database Server,Linux (Metasploitable 2),High,No
+V102,app-srv-01,192.168.56.102,Web Application Server,Alpine Linux + Docker,High,Yes
+V103,ws-01,192.168.56.103,Employee Workstation,Alpine Linux,Medium,No

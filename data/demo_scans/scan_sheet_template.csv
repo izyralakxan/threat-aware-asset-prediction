@@ -1,0 +1,4 @@
+scan_date,asset_id,hostname,ip_address,asset_type,operating_system,criticality,internet_exposed,port,protocol,service,product,version,cpe
+2026-10-03,D003,web-01,192.168.10.10,Web Server,Ubuntu Server,High,Yes,443,tcp,https,Apache httpd,2.4.68,cpe:/a:apache:http_server:2.4.68
+2026-10-03,D003,web-01,192.168.10.10,Web Server,Ubuntu Server,High,Yes,22,tcp,ssh,OpenSSH,10.5,cpe:/a:openbsd:openssh:10.5
+2026-10-03,D101,ws-fin-01,192.168.30.101,Workstation,Windows 11,Medium,No,445,tcp,microsoft-ds,Windows 11 23H2,10.0.22631.7517,cpe:/o:microsoft:windows_11_23h2:10.0.22631.7517

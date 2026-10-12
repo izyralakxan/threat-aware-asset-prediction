@@ -1,0 +1,43 @@
+{
+  "version": "operational-202508",
+  "created": "2026-10-11 06:55 UTC",
+  "role": "Operational model for live scoring. Research results use the frozen research model.",
+  "algorithm": "LightGBM + TF-IDF text, Platt calibration (same settings as the research model)",
+  "settings": {
+    "n_estimators": 200,
+    "num_leaves": 31,
+    "min_child_samples": 100,
+    "imbalance": "undersampled"
+  },
+  "trained_on": {
+    "period": "2021-11-03 to 2024-08-27",
+    "cves": 79111,
+    "exploited": 248
+  },
+  "calibrated_on": {
+    "period": "2024-08-28 to 2025-08-27",
+    "cves": 30071,
+    "exploited": 142
+  },
+  "holdout_12_months": {
+    "pr_auc": 0.0911,
+    "roc_auc": 0.8611,
+    "recall_top_1pct": 0.2183,
+    "recall_top_5pct": 0.4718,
+    "base_rate": 0.00472
+  },
+  "calibration_in_sample": {
+    "brier": 0.00452,
+    "log_loss": 0.02437,
+    "ece": 0.00055,
+    "expected_positives": 142.01382,
+    "actual_positives": 142.0
+  },
+  "tier_cutoffs": {
+    "Critical": 0.05478,
+    "High": 0.02037,
+    "Medium": 0.00536
+  },
+  "retrain": "Every 6 months, or when drift monitoring shows expected and actual counts diverging",
+  "promoted": false
+}

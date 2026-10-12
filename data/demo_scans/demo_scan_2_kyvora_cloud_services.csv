@@ -1,0 +1,24 @@
+scan_date,asset_id,hostname,ip_address,asset_type,operating_system,criticality,internet_exposed,port,protocol,service,product,version,cpe
+2026-10-03,D001,fw-edge-01,192.168.10.1,Firewall / VPN,FortiOS,High,Yes,443,tcp,https,FortiOS,7.2.12,cpe:/a:fortinet:fortios:7.2.12
+2026-10-03,D002,vpn-01,192.168.10.2,Remote Access Gateway,NetScaler,High,Yes,443,tcp,https,NetScaler ADC,14.1-47.48,cpe:/a:citrix:netscaler_application_delivery_controller:14.1-47.48
+2026-10-03,D003,web-01,192.168.10.10,Web Server,Ubuntu Server,High,Yes,443,tcp,https,Apache httpd,2.4.67,cpe:/a:apache:http_server:2.4.67
+2026-10-03,D003,web-01,192.168.10.10,Web Server,Ubuntu Server,High,Yes,22,tcp,ssh,OpenSSH,10.3,cpe:/a:openbsd:openssh:10.3
+2026-10-03,D004,web-02,192.168.10.11,Web Server,Ubuntu Server,High,Yes,443,tcp,https,nginx,1.27.4,cpe:/a:f5:nginx:1.27.4
+2026-10-03,D004,web-02,192.168.10.11,Web Server,Ubuntu Server,High,Yes,443,tcp,https,PHP,8.2.30,cpe:/a:php:php:8.2.30
+2026-10-03,D004,web-02,192.168.10.11,Web Server,Ubuntu Server,High,Yes,22,tcp,ssh,OpenSSH,10.0,cpe:/a:openbsd:openssh:10.0
+2026-10-03,D005,mail-01,192.168.10.20,Webmail Server,Ubuntu Server,High,Yes,443,tcp,https,Roundcube Webmail,1.6.12,cpe:/a:roundcube:webmail:1.6.12
+2026-10-03,D005,mail-01,192.168.10.20,Webmail Server,Ubuntu Server,High,Yes,22,tcp,ssh,OpenSSH,10.0,cpe:/a:openbsd:openssh:10.0
+2026-10-03,D010,dc-01,192.168.20.10,Domain Controller,Windows Server 2022,High,No,445,tcp,microsoft-ds,Windows Server 2022,10.0.20348.5440,cpe:/o:microsoft:windows_server_2022:10.0.20348.5440
+2026-10-03,D011,file-01,192.168.20.20,File Server,Windows Server 2019,High,No,445,tcp,microsoft-ds,Windows Server 2019,10.0.17763.8027,cpe:/o:microsoft:windows_server_2019:10.0.17763.8027
+2026-10-03,D012,db-01,192.168.20.30,Database Server,Ubuntu Server,High,No,3306,tcp,mysql,MySQL,8.0.46,cpe:/a:oracle:mysql:8.0.46
+2026-10-03,D012,db-01,192.168.20.30,Database Server,Ubuntu Server,High,No,22,tcp,ssh,OpenSSH,10.3,cpe:/a:openbsd:openssh:10.3
+2026-10-03,D013,app-01,192.168.20.40,Application Server,Ubuntu Server,Medium,No,8080,tcp,http,Apache Tomcat,9.0.109,cpe:/a:apache:tomcat:9.0.109
+2026-10-03,D013,app-01,192.168.20.40,Application Server,Ubuntu Server,Medium,No,22,tcp,ssh,OpenSSH,10.0,cpe:/a:openbsd:openssh:10.0
+2026-10-03,D014,ci-01,192.168.20.41,Build Server,Ubuntu Server,High,No,8080,tcp,http,Jenkins,2.500,cpe:/a:jenkins:jenkins:2.500
+2026-10-03,D014,ci-01,192.168.20.41,Build Server,Ubuntu Server,High,No,22,tcp,ssh,OpenSSH,10.0,cpe:/a:openbsd:openssh:10.0
+2026-10-03,D015,dns-01,192.168.20.53,DNS Server,Ubuntu Server,High,No,53,tcp,domain,ISC BIND,9.18.49,cpe:/a:isc:bind:9.18.49
+2026-10-03,D015,dns-01,192.168.20.53,DNS Server,Ubuntu Server,High,No,22,tcp,ssh,OpenSSH,10.5,cpe:/a:openbsd:openssh:10.5
+2026-10-03,D016,mon-01,192.168.20.60,Monitoring Server,Ubuntu Server,Medium,No,3000,tcp,http,Grafana,12.4.3,cpe:/a:grafana:grafana:12.4.3
+2026-10-03,D016,mon-01,192.168.20.60,Monitoring Server,Ubuntu Server,Medium,No,22,tcp,ssh,OpenSSH,10.3,cpe:/a:openbsd:openssh:10.3
+2026-10-03,D101,ws-fin-01,192.168.30.101,Workstation,Windows 11,Medium,No,445,tcp,microsoft-ds,Windows 11 23H2,10.0.22631.7517,cpe:/o:microsoft:windows_11_23h2:10.0.22631.7517
+2026-10-03,D102,ws-ops-01,192.168.30.102,Workstation,Windows 10,Medium,No,445,tcp,microsoft-ds,Windows 10 22H2,10.0.19045.6575,cpe:/o:microsoft:windows_10_22h2:10.0.19045.6575

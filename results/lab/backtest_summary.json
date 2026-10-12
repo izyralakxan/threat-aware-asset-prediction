@@ -1,0 +1,22 @@
+{
+  "snapshot_date": "2025-08-27",
+  "follow_up_end": "2026-08-27",
+  "assets": 30,
+  "assets_known_exploited_at_snapshot": 13,
+  "assets_newly_exploited_any_route": 19,
+  "assets_newly_exploited_window": 16,
+  "newly_exploited_cves_by_route": {
+    "new": 38,
+    "prediction window": 4
+  },
+  "cve_level": {
+    "window_cves": 1038,
+    "exploited_in_follow_up": 4,
+    "published_in_validation_year": 239,
+    "model_pr_auc": 0.018885344280603695,
+    "model_roc_auc": 0.5643133462282398,
+    "cvss_pr_auc": 0.006646310106422156,
+    "cvss_roc_auc": 0.6060203094777563,
+    "base_rate": 0.0038535645472061657
+  }
+}

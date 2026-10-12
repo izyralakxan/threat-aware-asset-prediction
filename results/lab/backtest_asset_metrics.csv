@@ -1,0 +1,15 @@
+target,ranker,positives,assets,roc_auc,hits_top_5,hits_top_10
+outcome_window,Model: P(at least one),16,30,0.9866071428571428,5,10
+outcome_window,Model: expected count,16,30,0.9866071428571428,5,10
+outcome_window,Model: max CVE probability,16,30,0.9955357142857143,5,10
+outcome_window,Product KEV history (12 m),16,30,0.9888392857142857,5,10
+outcome_window,Combined: model + product history,16,30,0.9910714285714285,5,10
+outcome_window,Max CVSS (baseline),16,30,0.9129464285714286,4,8
+outcome_window,Recent CVE count (baseline),16,30,0.9531250000000001,5,10
+outcome_any,Model: P(at least one),19,30,0.9210526315789473,5,10
+outcome_any,Model: expected count,19,30,0.9210526315789473,5,10
+outcome_any,Model: max CVE probability,19,30,0.9306220095693778,5,10
+outcome_any,Product KEV history (12 m),19,30,1.0,5,10
+outcome_any,Combined: model + product history,19,30,1.0,5,10
+outcome_any,Max CVSS (baseline),19,30,0.8923444976076556,5,9
+outcome_any,Recent CVE count (baseline),19,30,0.8516746411483254,5,10

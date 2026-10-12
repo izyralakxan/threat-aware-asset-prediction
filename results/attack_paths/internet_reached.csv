@@ -1,0 +1,26 @@
+asset_id,hostname,ip_address,segment,asset_type,crown_jewel,start,steps,probability,band,path,how
+L001,fw-edge-01,10.10.10.1,DMZ,Firewall / SSL-VPN,0,False,1,1.0,Likely,Internet → fw-edge-01,Exploit FortiOS via port 443 (2 known exploited)
+L002,adc-vpn-01,10.10.10.2,DMZ,Application Delivery / VPN,0,False,1,1.0,Likely,Internet → adc-vpn-01,Exploit NetScaler ADC via port 443 (3 known exploited)
+L101,ws-fin-01,10.10.30.101,WORKSTATIONS,Workstation,0,False,1,1.0,Likely,Internet → ws-fin-01,Exploit Google Chrome via client-side content (2 known exploited)
+L102,ws-fin-02,10.10.30.102,WORKSTATIONS,Workstation,0,False,1,1.0,Likely,Internet → ws-fin-02,Exploit Google Chrome via client-side content (2 known exploited)
+L104,ws-hr-02,10.10.30.104,WORKSTATIONS,Workstation,0,False,1,1.0,Likely,Internet → ws-hr-02,Exploit Google Chrome via client-side content (3 known exploited)
+L105,ws-dev-01,10.10.30.105,WORKSTATIONS,Developer Workstation,0,False,1,1.0,Likely,Internet → ws-dev-01,Exploit Google Chrome via client-side content (2 known exploited)
+L106,ws-dev-02,10.10.30.106,WORKSTATIONS,Developer Workstation,0,False,1,1.0,Likely,Internet → ws-dev-02,Exploit WinRAR via client-side content (3 known exploited)
+L107,ws-ops-01,10.10.30.107,WORKSTATIONS,Workstation,0,False,1,1.0,Likely,Internet → ws-ops-01,Exploit Google Chrome via client-side content (8 known exploited)
+L108,ws-exec-01,10.10.30.108,WORKSTATIONS,Executive Workstation,0,False,1,1.0,Likely,Internet → ws-exec-01,Exploit Google Chrome via client-side content (2 known exploited)
+L109,ws-reception,10.10.30.109,WORKSTATIONS,Shared Workstation,0,False,1,1.0,Likely,Internet → ws-reception,Exploit Google Chrome via client-side content (13 known exploited)
+L110,ws-it-01,10.10.30.110,WORKSTATIONS,Admin Workstation,0,False,1,1.0,Likely,Internet → ws-it-01,Exploit Google Chrome via client-side content (3 known exploited)
+L012,file-01,10.10.20.20,SERVERS,File Server,1,False,2,1.0,Likely,Internet → ws-fin-01 → file-01,Exploit Windows Server 2019 via port 135 (4 known exploited)
+L013,sp-01,10.10.20.21,SERVERS,Intranet (SharePoint),0,False,2,1.0,Likely,Internet → ws-fin-01 → sp-01,Exploit SharePoint Server via port 443 (4 known exploited)
+L010,dc-01,10.10.20.10,SERVERS,Domain Controller,1,False,2,0.8,Likely,Internet → ws-it-01 → dc-01,Admin logon: Domain admins log on from ws-it-01
+L011,dc-02,10.10.20.11,SERVERS,Domain Controller,1,False,2,0.8,Likely,Internet → ws-it-01 → dc-02,Admin logon: Domain admins log on from ws-it-01
+L103,ws-hr-01,10.10.30.103,WORKSTATIONS,Workstation,0,False,3,0.76,Likely,Internet → ws-it-01 → dc-01 → ws-hr-01,Domain admin: Domain controllers control every domain-joined Windows host
+L030,fw-core-01,10.10.99.1,MGMT,Internal Firewall,0,False,2,0.7,Likely,Internet → ws-it-01 → fw-core-01,Admin logon: Firewall administered from ws-it-01
+L005,webmail-01,10.10.10.20,DMZ,Mail Server,0,False,1,0.0931946951981567,Unlikely,Internet → webmail-01,"Exploit Roundcube Webmail via port 443 (predicted 9.3%, CVE-2026-54433)"
+L006,mft-01,10.10.10.30,DMZ,File Transfer Server,0,False,2,0.07369354340254632,Unlikely,Internet → fw-edge-01 → mft-01,"Exploit Windows Server 2022 via port 135 (predicted 7.4%, CVE-2026-69276)"
+L016,app-01,10.10.20.40,SERVERS,Application Server,0,False,2,0.04481607469743407,Unlikely,Internet → fw-edge-01 → app-01,"Exploit Apache Tomcat via port 8080 (predicted 4.5%, CVE-2026-65182)"
+L014,db-01,10.10.20.30,SERVERS,Database Server,1,False,3,0.040334467227690664,Unlikely,Internet → fw-edge-01 → app-01 → db-01,Stored credentials: app-01 holds the MySQL password for db-01
+L015,db-02,10.10.20.31,SERVERS,Database Server,1,False,3,0.040334467227690664,Unlikely,Internet → fw-edge-01 → app-01 → db-02,Stored credentials: app-01 holds the PostgreSQL password for db-02
+L020,nas-01,10.10.20.60,SERVERS,Backup / NAS,1,False,2,0.02961504954788889,Unlikely,Internet → ws-fin-01 → nas-01,"Exploit Samba via port 445 (predicted 3.0%, CVE-2026-4408)"
+L003,web-01,10.10.10.10,DMZ,Web Server,0,False,1,0.026755054657621194,Unlikely,Internet → web-01,"Exploit Apache httpd via port 443 (predicted 2.7%, CVE-2026-47360)"
+L018,mon-01,10.10.20.42,SERVERS,Monitoring Server,0,False,2,0.015970102904901858,Unlikely,Internet → ws-fin-01 → mon-01,"Exploit Grafana via port 3000 (predicted 1.6%, CVE-2026-33377)"

@@ -1,0 +1,5 @@
+segment,cidr,description,internet_exposed
+DMZ,10.10.10.0/24,Internet-facing services (VMnet2),Yes
+SERVERS,10.10.20.0/24,Internal server network (VMnet3),No
+WORKSTATIONS,10.10.30.0/24,Employee endpoints (VMnet4),No
+MGMT,10.10.99.0/24,Management and scanning (VMnet5),No

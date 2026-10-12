@@ -1,0 +1,73 @@
+digraph attack {
+  graph [rankdir=LR, bgcolor="#fbfbf8", fontname="Helvetica", fontsize=13, nodesep=0.25, ranksep=1.1, pad=0.3, newrank=true];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, penwidth=1.2];
+  edge [fontname="Helvetica", fontsize=10];
+  "INTERNET" [label="Internet", shape=ellipse, fillcolor="#1b1b1b", fontcolor="#ffffff", penwidth=2.5];
+  subgraph "cluster_DMZ" {
+    label="DMZ  10.10.10.0/24"; style="rounded,bold"; color="#5f6468"; fontcolor="#1b1b1b"; penwidth=1.5;
+    "10.10.10.1" [label="fw-edge-01\nFirewall / SSL-VPN\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.10.2" [label="adc-vpn-01\nApplication Delivery / VPN\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.10.10" [label="web-01\nWeb Server\n3%", peripheries="1", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.10.11" [label="web-02\nWeb Server", peripheries="1", fillcolor="#ffffff", fontcolor="#6b7075", color="#c4c8cb"];
+    "10.10.10.20" [label="webmail-01\nMail Server\n9%", peripheries="1", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.10.30" [label="mft-01\nFile Transfer Server\n7%", peripheries="1", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.10.40" [label="wiki-ext-01\nCollaboration Server", peripheries="1", fillcolor="#ffffff", fontcolor="#6b7075", color="#c4c8cb"];
+    "10.10.10.50" [label="★ git-01\nSource Code Server", peripheries="2", fillcolor="#ffffff", fontcolor="#6b7075", color="#c4c8cb"];
+  }
+  subgraph "cluster_SERVERS" {
+    label="SERVERS  10.10.20.0/24"; style="rounded,bold"; color="#5f6468"; fontcolor="#1b1b1b"; penwidth=1.5;
+    "10.10.20.10" [label="★ dc-01\nDomain Controller\n80%", peripheries="2", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.20.11" [label="★ dc-02\nDomain Controller\n80%", peripheries="2", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.20.20" [label="★ file-01\nFile Server\n100%", peripheries="2", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.20.21" [label="sp-01\nIntranet (SharePoint)\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.20.30" [label="★ db-01\nDatabase Server\n4%", peripheries="2", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.20.31" [label="★ db-02\nDatabase Server\n4%", peripheries="2", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.20.40" [label="app-01\nApplication Server\n4%", peripheries="1", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.20.41" [label="ci-01\nBuild Server", peripheries="1", fillcolor="#ffffff", fontcolor="#6b7075", color="#c4c8cb"];
+    "10.10.20.42" [label="mon-01\nMonitoring Server\n2%", peripheries="1", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+    "10.10.20.53" [label="dns-01\nDNS Server", peripheries="1", fillcolor="#ffffff", fontcolor="#6b7075", color="#c4c8cb"];
+    "10.10.20.60" [label="★ nas-01\nBackup / NAS\n3%", peripheries="2", fillcolor="#d48806", fontcolor="#1b1b1b", color="#d48806", penwidth="2"];
+  }
+  subgraph "cluster_WORKSTATIONS" {
+    label="WORKSTATIONS  10.10.30.0/24"; style="rounded,bold"; color="#5f6468"; fontcolor="#1b1b1b"; penwidth=1.5;
+    "10.10.30.101" [label="ws-fin-01\nWorkstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.102" [label="ws-fin-02\nWorkstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.103" [label="ws-hr-01\nWorkstation\n76%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.104" [label="ws-hr-02\nWorkstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.105" [label="ws-dev-01\nDeveloper Workstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.106" [label="ws-dev-02\nDeveloper Workstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.107" [label="ws-ops-01\nWorkstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.108" [label="ws-exec-01\nExecutive Workstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.109" [label="ws-reception\nShared Workstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+    "10.10.30.110" [label="ws-it-01\nAdmin Workstation\n100%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+  }
+  subgraph "cluster_MGMT" {
+    label="MGMT  10.10.99.0/24"; style="rounded,bold"; color="#5f6468"; fontcolor="#1b1b1b"; penwidth=1.5;
+    "10.10.99.1" [label="fw-core-01\nInternal Firewall\n70%", peripheries="1", fillcolor="#b71c1c", fontcolor="#ffffff", color="#b71c1c", penwidth="2"];
+  }
+  "INTERNET" -> "10.10.10.1" [color="#b71c1c", penwidth=2.6, style=solid, label="FortiOS (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.10.10" [color="#d48806", penwidth=2.6, style=solid, label="Apache httpd", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.10.2" [color="#b71c1c", penwidth=2.6, style=solid, label="NetScaler ADC (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.10.20" [color="#d48806", penwidth=2.6, style=solid, label="Roundcube Webmail", fontcolor="#1b1b1b"];
+  "10.10.10.1" -> "10.10.10.30" [color="#d48806", penwidth=2.6, style=solid, label="Windows Server 2022", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.101" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.102" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "10.10.20.10" -> "10.10.30.103" [color="#b71c1c", penwidth=2.6, style=dashed, label="Domain admin", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.104" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.105" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.106" [color="#b71c1c", penwidth=2.6, style=solid, label="WinRAR (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.107" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.108" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.109" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "INTERNET" -> "10.10.30.110" [color="#b71c1c", penwidth=2.6, style=solid, label="Google Chrome (KEV)", fontcolor="#1b1b1b"];
+  "10.10.10.1" -> "10.10.20.40" [color="#d48806", penwidth=2.6, style=solid, label="Apache Tomcat", fontcolor="#1b1b1b"];
+  "10.10.30.110" -> "10.10.20.10" [color="#b71c1c", penwidth=2.6, style=dashed, label="Admin logon", fontcolor="#1b1b1b"];
+  "10.10.30.110" -> "10.10.20.11" [color="#b71c1c", penwidth=2.6, style=dashed, label="Admin logon", fontcolor="#1b1b1b"];
+  "10.10.30.101" -> "10.10.20.20" [color="#b71c1c", penwidth=2.6, style=solid, label="Windows Server 2019 (KEV)", fontcolor="#1b1b1b"];
+  "10.10.30.101" -> "10.10.20.21" [color="#b71c1c", penwidth=2.6, style=solid, label="SharePoint Server (KEV)", fontcolor="#1b1b1b"];
+  "10.10.30.101" -> "10.10.20.42" [color="#d48806", penwidth=2.6, style=solid, label="Grafana", fontcolor="#1b1b1b"];
+  "10.10.30.101" -> "10.10.20.60" [color="#d48806", penwidth=2.6, style=solid, label="Samba", fontcolor="#1b1b1b"];
+  "10.10.30.110" -> "10.10.99.1" [color="#b71c1c", penwidth=2.6, style=dashed, label="Admin logon", fontcolor="#1b1b1b"];
+  "10.10.20.40" -> "10.10.20.30" [color="#d48806", penwidth=2.6, style=dashed, label="Stored credentials", fontcolor="#1b1b1b"];
+  "10.10.20.40" -> "10.10.20.31" [color="#d48806", penwidth=2.6, style=dashed, label="Stored credentials", fontcolor="#1b1b1b"];
+}

@@ -1,0 +1,12 @@
+asset_id,hostname,ip_address,asset_type,criticality,internet_exposed,scan_status,open_services,exposure_level,priority_score,known_exploited,exposure_probability_12m,expected_new_exposure_12m,expected_exploited_12m,product_kev_rate_12m,most_targeted_product,window_cves,critical_tier_cves,high_tier_cves,exploit_likelihood_12m,max_cve_probability,top_predicted_cve,top_predicted_probability,matched_cves,unconfirmed_cves,unversioned_services
+A001,web-server-01,192.168.1.10,Web Server,High,Yes,Scanned,2.0,Critical,1.0,1,0.13954437919786655,0.15029323839423425,0.15029323839423425,0,Apache httpd,30,0,1,0.1401388129964093,0.021912785290114936,CVE-2026-28780,0.021912785290114936,61,0,0.0
+A004,mail-server-01,192.168.1.40,Mail Server,High,Yes,Scanned,2.0,Critical,1.0,1,0.0,0.0,0.0,0,Postfix smtpd,0,0,0,0.0,0.0,,,2,16,1.0
+A007,internal-app-01,192.168.1.70,Application Server,Medium,No,Scanned,1.0,Critical,0.3,1,0.6796116986923108,1.1382215772270459,0.13822157722704595,1,Apache Tomcat,37,1,0,0.13027999300740445,0.04481607469743407,CVE-2026-65182,0.04481607469743407,59,0,0.0
+A008,dns-server-01,192.168.1.80,DNS Server,High,No,Scanned,1.0,Low,0.0008391898883213789,0,0.0016783797766427577,0.001679789833942061,0.001679789833942061,0,ISC BIND,4,0,0,0.0016790074801324995,0.0010587310922979347,CVE-2026-5946,0.0010587310922979347,10,0,0.0
+A010,developer-pc-01,192.168.1.100,Workstation,Medium,No,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,
+A002,db-server-01,192.168.1.20,Database Server,High,No,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,
+UNMANAGED,,192.168.1.200,,,,Unmanaged (not in inventory),1.0,Unverified,0.0,0,0.0,0.0,0.0,0,lighttpd,0,0,0,0.0,0.0,,,0,35,1.0
+A003,employee-pc-01,192.168.1.30,Workstation,Medium,No,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,
+A005,backup-server-01,192.168.1.50,Backup Server,High,No,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,
+A006,employee-pc-02,192.168.1.60,Workstation,Low,No,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,
+A009,web-server-02,192.168.1.90,Web Server,High,Yes,Not scanned,,Unknown,0.0,0,0.0,0.0,0.0,0,,0,0,0,0.0,0.0,,,0,0,

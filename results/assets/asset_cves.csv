@@ -1,0 +1,184 @@
+ip_address,cve_id,product,installed_version,match_confidence,ports,published_date,cvss_score,cvss_severity,kev_date_added,status,probability,tier,risk_drivers,hostname
+192.168.1.10,CVE-2024-38475,Apache httpd,2.4.58,version match,80;443,2024-07-01,9.1,CRITICAL,2025-05-01,Known exploited,,,,web-server-01
+192.168.1.10,CVE-1999-0289,Apache httpd,2.4.58,all versions,80;443,1999-12-12,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-1999-0678,Apache httpd,2.4.58,all versions,80;443,1999-01-17,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-1999-1237,Apache httpd,2.4.58,all versions,80;443,1999-06-06,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-1999-1412,Apache httpd,2.4.58,all versions,80;443,1999-06-03,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2007-0086,Apache httpd,2.4.58,all versions,80;443,2007-01-05,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2007-0450,Apache httpd,2.4.58,all versions,80;443,2007-03-16,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2007-6421,Apache httpd,2.4.58,all versions,80;443,2008-01-08,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2007-6422,Apache httpd,2.4.58,all versions,80;443,2008-01-08,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2007-6423,Apache httpd,2.4.58,all versions,80;443,2008-01-12,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2008-2168,Apache httpd,2.4.58,all versions,80;443,2008-05-13,,,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2023-38709,Apache httpd,2.4.58,version match,80;443,2024-04-04,7.3,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-24795,Apache httpd,2.4.58,version match,80;443,2024-04-04,6.3,MEDIUM,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-27316,Apache httpd,2.4.58,version match,80;443,2024-04-04,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-36387,Apache httpd,2.4.58,version match,80;443,2024-07-01,5.4,MEDIUM,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-38472,Apache httpd,2.4.58,version match,80;443,2024-07-01,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-38473,Apache httpd,2.4.58,version match,80;443,2024-07-01,8.1,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-38474,Apache httpd,2.4.58,version match,80;443,2024-07-01,9.8,CRITICAL,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-38476,Apache httpd,2.4.58,version match,80;443,2024-07-01,9.8,CRITICAL,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-38477,Apache httpd,2.4.58,version match,80;443,2024-07-01,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-39573,Apache httpd,2.4.58,version match,80;443,2024-07-01,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-40898,Apache httpd,2.4.58,version match,80;443,2024-07-18,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-42516,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-43204,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-43394,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2024-47252,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2025-23048,Apache httpd,2.4.58,version match,80;443,2025-07-10,9.1,CRITICAL,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2025-3891,Apache httpd,2.4.58,all versions,80;443,2025-04-29,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2025-49630,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2025-49812,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.4,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2025-53020,Apache httpd,2.4.58,version match,80;443,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,web-server-01
+192.168.1.10,CVE-2026-28780,Apache httpd,2.4.58,version match,80;443,2026-05-05,9.8,CRITICAL,,Prediction window,0.021912785290114936,High,"cvss_score (+0.84); vendor_prior_kev_rate (+0.76); text: ""attacker"" (+0.52); exploitability_score (+0.34); cwe_prior_kev (+0.33)",web-server-01
+192.168.1.10,CVE-2025-55753,Apache httpd,2.4.58,version match,80;443,2025-12-05,7.5,HIGH,,Prediction window,0.013448345661955352,Medium,cwe_prior_kev (+1.18); vendor_prior_kev_rate (+0.90); vendor_prior_kev_1y (+0.64); exploitability_score (+0.50); availability_impact_NONE (+0.15),web-server-01
+192.168.1.10,CVE-2026-34355,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.5,HIGH,,Prediction window,0.011612432934387283,Medium,"cwe_prior_kev (+1.24); vendor_prior_kev_rate (+0.71); text: ""allows"" (+0.66); exploitability_score (+0.48); text: ""earlier"" (+0.21)",web-server-01
+192.168.1.10,CVE-2026-29167,Apache httpd,2.4.58,version match,80;443,2026-06-08,9.8,CRITICAL,,Prediction window,0.01144237901025937,Medium,"cvss_score (+0.82); cwe_prior_kev (+0.61); vendor_prior_kev_rate (+0.60); exploitability_score (+0.35); text: ""server"" (+0.21)",web-server-01
+192.168.1.10,CVE-2026-48005,Apache httpd,2.4.58,version match,80;443,2026-10-01,7.5,HIGH,,Prediction window,0.00783957810532277,Medium,"text: ""unauthenticated"" (+0.97); cwe_prior_kev (+0.83); vendor_prior_kev_rate (+0.65); text: ""remote"" (+0.63); exploitability_score (+0.39)",web-server-01
+192.168.1.10,CVE-2025-59775,Apache httpd,2.4.58,version match,80;443,2025-12-05,7.5,HIGH,,Prediction window,0.006793980585139609,Medium,"vendor_prior_kev_rate (+0.83); vendor_prior_kev_1y (+0.62); exploitability_score (+0.50); cwe_prior_kev (+0.47); text: ""server"" (+0.18)",web-server-01
+192.168.1.10,CVE-2026-44185,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.3,HIGH,,Prediction window,0.006793406658387944,Medium,"cwe_prior_kev (+1.05); vendor_prior_kev_rate (+0.76); exploitability_score (+0.41); text: ""issue"" (+0.22); text: ""server"" (+0.16)",web-server-01
+192.168.1.10,CVE-2026-33006,Apache httpd,2.4.58,version match,80;443,2026-05-04,4.8,MEDIUM,,Prediction window,0.0060854995795794455,Medium,"text: ""allows"" (+0.95); vendor_prior_kev_rate (+0.94); text: ""attacker"" (+0.52); text: ""remote"" (+0.26); text: ""remote attacker"" (+0.25)",web-server-01
+192.168.1.10,CVE-2026-43951,Apache httpd,2.4.58,version match,80;443,2026-06-08,6.5,MEDIUM,,Prediction window,0.0059091473373985666,Medium,"cwe_prior_kev (+1.27); vendor_prior_kev_rate (+0.69); exploitability_score (+0.51); availability_impact_NONE (+0.19); text: ""issue"" (+0.19)",web-server-01
+192.168.1.10,CVE-2026-44631,Apache httpd,2.4.58,version match,80;443,2026-06-08,9.8,CRITICAL,,Prediction window,0.005336930432648561,Medium,"cvss_score (+1.04); vendor_prior_kev_rate (+0.74); exploitability_score (+0.37); text: ""crafted"" (+0.28); impact_score (+0.20)",web-server-01
+192.168.1.10,CVE-2026-34032,Apache httpd,2.4.58,version match,80;443,2026-05-04,5.3,MEDIUM,,Prediction window,0.005243786648185497,Medium,"cwe_prior_kev (+1.21); vendor_prior_kev_rate (+0.75); exploitability_score (+0.50); vendor_prior_cves (+0.26); text: ""server"" (+0.17)",web-server-01
+192.168.1.10,CVE-2025-66200,Apache httpd,2.4.58,version match,80;443,2025-12-05,5.4,MEDIUM,,Prediction window,0.00462948196981335,Medium,"vendor_prior_kev_rate (+1.02); text: ""access"" (+0.75); vendor_prior_kev_1y (+0.59); cwe_prior_kev (+0.25); text: ""server"" (+0.15)",web-server-01
+192.168.1.10,CVE-2026-33007,Apache httpd,2.4.58,version match,80;443,2026-05-04,5.3,MEDIUM,,Prediction window,0.004598934543282623,Medium,"text: ""unauthenticated"" (+1.15); text: ""remote"" (+0.92); vendor_prior_kev_rate (+0.91); exploitability_score (+0.37); text: ""earlier"" (+0.20)",web-server-01
+192.168.1.10,CVE-2026-56153,Apache httpd,2.4.58,version match,80;443,2026-10-01,7.5,HIGH,,Prediction window,0.004575230681450773,Medium,vendor_prior_kev_rate (+0.69); cwe_prior_kev (+0.67); vendor_prior_kev_1y (+0.44); exploitability_score (+0.39); availability_impact_NONE (+0.21),web-server-01
+192.168.1.10,CVE-2026-42536,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.5,HIGH,,Prediction window,0.004156034617441075,Medium,"cwe_prior_kev (+1.39); vendor_prior_kev_rate (+0.68); exploitability_score (+0.47); text: ""server"" (+0.20); text: ""issue"" (+0.17)",web-server-01
+192.168.1.10,CVE-2026-33857,Apache httpd,2.4.58,version match,80;443,2026-05-04,5.3,MEDIUM,,Prediction window,0.003937157322560395,Medium,cwe_prior_kev (+1.23); vendor_prior_kev_rate (+0.74); exploitability_score (+0.51); availability_impact_NONE (+0.19); vendor_prior_cves (+0.18),web-server-01
+192.168.1.10,CVE-2026-44119,Apache httpd,2.4.58,version match,80;443,2026-06-08,5.5,MEDIUM,,Prediction window,0.003841418392659406,Medium,"cwe_prior_kev (+1.02); vendor_prior_kev_rate (+0.78); text: ""local"" (+0.25); text: ""earlier"" (+0.19); text: ""vulnerability"" (+0.14)",web-server-01
+192.168.1.10,CVE-2026-24072,Apache httpd,2.4.58,version match,80;443,2026-05-04,8.8,HIGH,,Prediction window,0.003750457978505157,Medium,"cwe_prior_kev (+0.91); vendor_prior_kev_rate (+0.85); text: ""earlier"" (+0.21); text: ""local"" (+0.18); text: ""issue"" (+0.17)",web-server-01
+192.168.1.10,CVE-2026-34356,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.5,HIGH,,Prediction window,0.0033996548929891134,Low,"cwe_prior_kev (+1.12); vendor_prior_kev_rate (+0.77); exploitability_score (+0.48); text: ""server"" (+0.20); text: ""issue"" (+0.17)",web-server-01
+192.168.1.10,CVE-2026-29170,Apache httpd,2.4.58,version match,80;443,2026-06-08,6.1,MEDIUM,,Prediction window,0.0025836308477277105,Low,"cwe_prior_kev (+1.65); vendor_prior_kev_rate (+0.72); text: ""earlier"" (+0.24); text: ""issue"" (+0.14); availability_impact_NONE (+0.12)",web-server-01
+192.168.1.10,CVE-2026-48913,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.3,HIGH,,Prediction window,0.0019180569734684055,Low,"cwe_prior_kev (+0.77); vendor_prior_kev_rate (+0.69); exploitability_score (+0.36); text: ""server"" (+0.22); text: ""issue"" (+0.17)",web-server-01
+192.168.1.10,CVE-2025-65082,Apache httpd,2.4.58,version match,80;443,2025-12-05,6.5,MEDIUM,,Prediction window,0.0017850245505889103,Low,"vendor_prior_kev_rate (+1.06); vendor_prior_kev_1y (+0.65); exploitability_score (+0.42); text: ""server"" (+0.17); cwe_other (+0.14)",web-server-01
+192.168.1.10,CVE-2026-44186,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.3,HIGH,,Prediction window,0.001692943154884408,Low,"vendor_prior_kev_rate (+0.92); text: ""attacker"" (+0.58); exploitability_score (+0.39); text: ""issue"" (+0.22); cwe_other (+0.17)",web-server-01
+192.168.1.10,CVE-2026-42535,Apache httpd,2.4.58,version match,80;443,2026-06-08,9.1,CRITICAL,,Prediction window,0.0016584812535406686,Low,"vendor_prior_kev_rate (+0.93); exploitability_score (+0.41); cvss_score (+0.27); cwe_other (+0.27); text: ""earlier"" (+0.24)",web-server-01
+192.168.1.10,CVE-2025-58098,Apache httpd,2.4.58,version match,80;443,2025-12-05,8.3,HIGH,,Prediction window,0.0015306482525791045,Low,"vendor_prior_kev_rate (+1.17); vendor_prior_kev_1y (+0.63); cwe_other (+0.27); text: ""earlier"" (+0.23); text: ""issue"" (+0.14)",web-server-01
+192.168.1.10,CVE-2026-33523,Apache httpd,2.4.58,version match,80;443,2026-05-04,6.5,MEDIUM,,Prediction window,0.0009214470827547227,Low,"vendor_prior_kev_rate (+0.87); exploitability_score (+0.46); text: ""server"" (+0.17); text: ""issue"" (+0.16); cwe_other (+0.15)",web-server-01
+192.168.1.10,CVE-2026-29169,Apache httpd,2.4.58,version match,80;443,2026-05-04,7.5,HIGH,,Prediction window,0.0009195854798104623,Low,"vendor_prior_kev_rate (+0.93); text: ""attacker"" (+0.56); exploitability_score (+0.43); text: ""earlier"" (+0.22); text: ""issue"" (+0.21)",web-server-01
+192.168.1.10,CVE-2026-49975,Apache httpd,2.4.58,version match,80;443,2026-06-08,7.5,HIGH,,Prediction window,0.0007123464741791946,Low,vendor_prior_kev_rate (+0.67); vendor_prior_kev (+0.62); vendor_prior_cves (+0.47); vendor_prior_kev_1y (+0.37); exploitability_score (+0.21),web-server-01
+192.168.1.10,CVE-2026-34059,Apache httpd,2.4.58,version match,80;443,2026-05-04,7.5,HIGH,,Prediction window,0.0006433754936894379,Low,"vendor_prior_kev_rate (+0.85); exploitability_score (+0.44); text: ""server"" (+0.17); text: ""issue"" (+0.12); availability_impact_NONE (+0.10)",web-server-01
+192.168.1.10,CVE-2026-29168,Apache httpd,2.4.58,version match,80;443,2026-05-05,7.3,HIGH,,Prediction window,0.0006210561889300294,Low,"vendor_prior_kev_rate (+0.84); exploitability_score (+0.45); text: ""server"" (+0.18); cwe_other (+0.18); text: ""issue"" (+0.17)",web-server-01
+192.168.1.200,CVE-2005-0453,lighttpd,,version unknown,80,2005-02-16,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2006-0760,lighttpd,,version unknown,80,2006-02-18,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2006-0814,lighttpd,,version unknown,80,2006-03-06,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-1869,lighttpd,,version unknown,80,2007-04-18,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-1870,lighttpd,,version unknown,80,2007-04-18,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-3946,lighttpd,,version unknown,80,2007-07-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-3947,lighttpd,,version unknown,80,2007-07-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-3948,lighttpd,,version unknown,80,2007-07-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-3949,lighttpd,,version unknown,80,2007-07-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-3950,lighttpd,,version unknown,80,2007-07-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2007-4727,lighttpd,,version unknown,80,2007-09-12,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-0983,lighttpd,,version unknown,80,2008-02-26,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-1111,lighttpd,,version unknown,80,2008-03-04,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-1270,lighttpd,,version unknown,80,2008-03-10,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-1531,lighttpd,,version unknown,80,2008-03-27,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-4298,lighttpd,,version unknown,80,2008-09-27,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-4359,lighttpd,,version unknown,80,2008-10-03,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2008-4360,lighttpd,,version unknown,80,2008-10-03,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2010-0295,lighttpd,,version unknown,80,2010-02-03,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2011-4362,lighttpd,,version unknown,80,2011-12-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2012-5533,lighttpd,,version unknown,80,2012-11-24,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2013-1427,lighttpd,,version unknown,80,2013-03-21,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2013-4508,lighttpd,,version unknown,80,2013-11-08,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2013-4559,lighttpd,,version unknown,80,2013-11-20,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2013-4560,lighttpd,,version unknown,80,2013-11-20,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2014-2323,lighttpd,,version unknown,80,2014-03-14,9.8,CRITICAL,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2014-2324,lighttpd,,version unknown,80,2014-03-14,,,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2015-3200,lighttpd,,version unknown,80,2015-06-09,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2018-19052,lighttpd,,version unknown,80,2018-11-07,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2019-11072,lighttpd,,version unknown,80,2019-04-10,9.8,CRITICAL,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2022-22707,lighttpd,,version unknown,80,2022-01-06,5.9,MEDIUM,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2022-30780,lighttpd,,version unknown,80,2022-06-11,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2022-37797,lighttpd,,version unknown,80,2022-09-12,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2022-41556,lighttpd,,version unknown,80,2022-10-06,7.5,HIGH,,"Older, not in KEV",,,,
+192.168.1.200,CVE-2025-12642,lighttpd,,version unknown,80,2025-11-03,9.1,CRITICAL,,Prediction window,0.007491753919715407,Medium,"vendor_prior_cves (+0.68); text: ""access"" (+0.67); text: ""attacker"" (+0.61); exploitability_score (+0.45); text: ""issue"" (+0.36)",
+192.168.1.40,CVE-2023-44487,nginx,1.24.0,version match,443,2023-10-10,7.5,HIGH,2023-10-10,Known exploited,,,,mail-server-01
+192.168.1.40,CVE-2001-0894,Postfix smtpd,,version unknown,25,2001-11-11,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2003-0468,Postfix smtpd,,version unknown,25,2003-08-27,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2003-0540,Postfix smtpd,,version unknown,25,2003-08-27,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2005-0337,Postfix smtpd,,version unknown,25,2005-05-02,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2008-2936,Postfix smtpd,,version unknown,25,2008-08-18,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2008-2937,Postfix smtpd,,version unknown,25,2008-08-18,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2008-3889,Postfix smtpd,,version unknown,25,2008-09-12,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2008-4977,Postfix smtpd,,version unknown,25,2008-11-06,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2009-2939,Postfix smtpd,,version unknown,25,2009-09-21,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2011-0411,Postfix smtpd,,version unknown,25,2011-03-16,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2011-1720,Postfix smtpd,,version unknown,25,2011-05-13,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2012-0811,Postfix smtpd,,version unknown,25,2014-10-01,,,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2017-10140,Postfix smtpd,,version unknown,25,2018-04-16,7.8,HIGH,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2020-12063,Postfix smtpd,,version unknown,25,2020-04-24,5.3,MEDIUM,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2023-51764,Postfix smtpd,,version unknown,25,2023-12-24,5.3,MEDIUM,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2025-23419,nginx,1.24.0,version match,443,2025-02-05,4.3,MEDIUM,,"Older, not in KEV",,,,mail-server-01
+192.168.1.40,CVE-2026-43964,Postfix smtpd,,version unknown,25,2026-05-04,7.5,HIGH,,Prediction window,0.00245945876720989,Low,"text: ""allows"" (+1.21); text: ""code"" (+0.83); exploitability_score (+0.52); vendor_prior_cves (+0.46); cwe_other (+0.15)",mail-server-01
+192.168.1.70,CVE-2025-24813,Apache Tomcat,9.0.85,version match,8080,2025-03-10,9.8,CRITICAL,2025-04-01,Known exploited,,,,internal-app-01
+192.168.1.70,CVE-2016-5425,Apache Tomcat,9.0.85,all versions,8080,2016-10-13,7.8,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2016-6325,Apache Tomcat,9.0.85,all versions,8080,2016-10-13,7.8,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-23672,Apache Tomcat,9.0.85,version match,8080,2024-03-13,6.3,MEDIUM,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-24549,Apache Tomcat,9.0.85,version match,8080,2024-03-13,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-34750,Apache Tomcat,9.0.85,version match,8080,2024-07-03,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-38286,Apache Tomcat,9.0.85,version match,8080,2024-11-07,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-50379,Apache Tomcat,9.0.85,version match,8080,2024-12-17,9.8,CRITICAL,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-52316,Apache Tomcat,9.0.85,version match,8080,2024-11-18,9.8,CRITICAL,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-54677,Apache Tomcat,9.0.85,version match,8080,2024-12-17,5.3,MEDIUM,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2024-56337,Apache Tomcat,9.0.85,version match,8080,2024-12-20,9.8,CRITICAL,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-31650,Apache Tomcat,9.0.85,version match,8080,2025-04-28,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-31651,Apache Tomcat,9.0.85,version match,8080,2025-04-28,9.8,CRITICAL,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-46701,Apache Tomcat,9.0.85,version match,8080,2025-05-29,7.3,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-48988,Apache Tomcat,9.0.85,version match,8080,2025-06-16,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-48989,Apache Tomcat,9.0.85,version match,8080,2025-08-13,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-49124,Apache Tomcat,9.0.85,version match,8080,2025-06-16,8.4,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-49125,Apache Tomcat,9.0.85,version match,8080,2025-06-16,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-52434,Apache Tomcat,9.0.85,version match,8080,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-52520,Apache Tomcat,9.0.85,version match,8080,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-53506,Apache Tomcat,9.0.85,version match,8080,2025-07-10,7.5,HIGH,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2025-55668,Apache Tomcat,9.0.85,version match,8080,2025-08-13,6.5,MEDIUM,,"Older, not in KEV",,,,internal-app-01
+192.168.1.70,CVE-2026-65182,Apache Tomcat,9.0.85,version match,8080,2026-08-25,9.1,CRITICAL,,Prediction window,0.04481607469743407,Critical,"cwe_prior_kev (+1.52); text: ""access"" (+0.70); vendor_prior_kev_rate (+0.65); vendor_prior_kev_1y (+0.50); exploitability_score (+0.46)",internal-app-01
+192.168.1.70,CVE-2026-68525,Apache Tomcat,9.0.85,version match,8080,2026-08-25,9.1,CRITICAL,,Prediction window,0.01441192803588273,Medium,"cwe_prior_kev (+1.27); vendor_prior_kev_rate (+0.69); text: ""access"" (+0.63); vendor_prior_kev_1y (+0.47); exploitability_score (+0.44)",internal-app-01
+192.168.1.70,CVE-2026-29145,Apache Tomcat,9.0.85,version match,8080,2026-04-09,9.1,CRITICAL,,Prediction window,0.012350456069342874,Medium,"cwe_prior_kev (+1.59); vendor_prior_kev_rate (+0.63); exploitability_score (+0.46); text: ""issue"" (+0.20); availability_impact_NONE (+0.19)",internal-app-01
+192.168.1.70,CVE-2025-66614,Apache Tomcat,9.0.85,version match,8080,2026-02-17,9.1,CRITICAL,,Prediction window,0.007851180581075265,Medium,vendor_prior_kev_rate (+0.76); cwe_prior_kev (+0.65); vendor_prior_kev_1y (+0.45); exploitability_score (+0.38); cvss_score (+0.21),internal-app-01
+192.168.1.70,CVE-2025-55754,Apache Tomcat,9.0.85,version match,8080,2025-10-27,9.6,CRITICAL,,Prediction window,0.007429814978131021,Medium,"vendor_prior_kev_rate (+1.02); cvss_score (+0.79); text: ""attacker"" (+0.72); vendor_prior_kev_1y (+0.59); cwe_other (+0.26)",internal-app-01
+192.168.1.70,CVE-2026-41293,Apache Tomcat,9.0.85,version match,8080,2026-05-12,9.8,CRITICAL,,Prediction window,0.006466629515626215,Medium,cvss_score (+0.87); vendor_prior_kev_rate (+0.61); cwe_prior_kev (+0.54); exploitability_score (+0.34); vendor_prior_kev (+0.25),internal-app-01
+192.168.1.70,CVE-2026-65905,Apache Tomcat,9.0.85,version match,8080,2026-08-25,9.8,CRITICAL,,Prediction window,0.005667696516895232,Medium,cvss_score (+1.11); vendor_prior_kev_rate (+0.74); vendor_prior_kev_1y (+0.57); exploitability_score (+0.37); impact_score (+0.20),internal-app-01
+192.168.1.70,CVE-2026-55955,Apache Tomcat,9.0.85,version match,8080,2026-06-29,6.5,MEDIUM,,Prediction window,0.004743166681770287,Medium,"cwe_prior_kev (+1.20); vendor_prior_kev_rate (+0.66); exploitability_score (+0.48); text: ""issue"" (+0.18); availability_impact_NONE (+0.18)",internal-app-01
+192.168.1.70,CVE-2026-43512,Apache Tomcat,9.0.85,version match,8080,2026-05-12,9.8,CRITICAL,,Prediction window,0.003961340667057408,Medium,cvss_score (+1.07); vendor_prior_kev_rate (+0.67); exploitability_score (+0.37); impact_score (+0.20); vendor_prior_kev (+0.20),internal-app-01
+192.168.1.70,CVE-2026-24734,Apache Tomcat,9.0.85,version match,8080,2026-02-17,7.5,HIGH,,Prediction window,0.003778017427257844,Medium,"vendor_prior_kev_rate (+0.79); cwe_prior_kev (+0.58); vendor_prior_kev_1y (+0.48); exploitability_score (+0.35); text: ""allow"" (+0.31)",internal-app-01
+192.168.1.70,CVE-2026-42498,Apache Tomcat,9.0.85,version match,8080,2026-05-12,7.3,HIGH,,Prediction window,0.003650780429664222,Low,"cwe_prior_kev (+1.16); vendor_prior_kev_rate (+0.70); exploitability_score (+0.50); text: ""issue"" (+0.18); vendor_prior_kev_1y (+0.13)",internal-app-01
+192.168.1.70,CVE-2025-55752,Apache Tomcat,9.0.85,version match,8080,2025-10-27,7.5,HIGH,,Prediction window,0.0026193343660805943,Low,"vendor_prior_kev_rate (+1.03); vendor_prior_kev_1y (+0.58); text: ""attacker"" (+0.40); impact_score (+0.23); cwe_other (+0.22)",internal-app-01
+192.168.1.70,CVE-2026-24733,Apache Tomcat,9.0.85,version match,8080,2026-02-17,3.7,LOW,,Prediction window,0.002269986619266836,Low,"vendor_prior_kev_rate (+0.83); cwe_prior_kev (+0.73); vendor_prior_kev_1y (+0.44); text: ""allow"" (+0.19); text: ""versions"" (+0.15)",internal-app-01
+192.168.1.70,CVE-2026-68569,Apache Tomcat,9.0.85,version match,8080,2026-08-25,8.1,HIGH,,Prediction window,0.0022205429314623567,Low,cwe_prior_kev (+1.10); vendor_prior_kev_rate (+0.84); vendor_prior_kev_1y (+0.49); vendor_prior_kev (+0.14); availability_impact_NONE (+0.12),internal-app-01
+192.168.1.70,CVE-2026-65183,Apache Tomcat,9.0.85,version match,8080,2026-08-25,8.1,HIGH,,Prediction window,0.001779951503267794,Low,"vendor_prior_kev_rate (+0.91); text: ""access"" (+0.63); vendor_prior_kev_1y (+0.51); impact_score (+0.21); cwe_other (+0.19)",internal-app-01
+192.168.1.70,CVE-2026-55276,Apache Tomcat,9.0.85,version match,8080,2026-06-29,9.1,CRITICAL,,Prediction window,0.0016667807908201614,Low,"vendor_prior_kev_rate (+0.77); exploitability_score (+0.41); cvss_score (+0.29); text: ""issue"" (+0.19); text: ""web"" (+0.16)",internal-app-01
+192.168.1.70,CVE-2026-43515,Apache Tomcat,9.0.85,version match,8080,2026-05-12,9.1,CRITICAL,,Prediction window,0.0013916524266134745,Low,"vendor_prior_kev_rate (+0.79); exploitability_score (+0.41); cvss_score (+0.25); text: ""issue"" (+0.21); cwe_other (+0.14)",internal-app-01
+192.168.1.70,CVE-2026-34487,Apache Tomcat,9.0.85,version match,8080,2026-04-09,7.5,HIGH,,Prediction window,0.0011829849028246126,Low,"vendor_prior_kev_rate (+0.73); exploitability_score (+0.47); text: ""information"" (+0.19); vendor_prior_kev_1y (+0.16); text: ""issue"" (+0.16)",internal-app-01
+192.168.1.70,CVE-2026-59083,Apache Tomcat,9.0.85,version match,8080,2026-07-14,9.1,CRITICAL,,Prediction window,0.0011075684873428512,Low,"vendor_prior_kev_rate (+0.78); exploitability_score (+0.41); cvss_score (+0.27); text: ""issue"" (+0.21); cwe_other (+0.13)",internal-app-01
+192.168.1.70,CVE-2026-59084,Apache Tomcat,9.0.85,version match,8080,2026-07-14,9.1,CRITICAL,,Prediction window,0.0011075684873428512,Low,"vendor_prior_kev_rate (+0.78); exploitability_score (+0.41); cvss_score (+0.27); text: ""issue"" (+0.21); cwe_other (+0.13)",internal-app-01
+192.168.1.70,CVE-2026-53434,Apache Tomcat,9.0.85,version match,8080,2026-06-29,9.1,CRITICAL,,Prediction window,0.0008542612247782679,Low,"vendor_prior_kev_rate (+0.77); exploitability_score (+0.39); cvss_score (+0.23); text: ""issue"" (+0.22); cwe_other (+0.14)",internal-app-01
+192.168.1.70,CVE-2026-24880,Apache Tomcat,9.0.85,version match,8080,2026-04-09,7.5,HIGH,,Prediction window,0.0007549481744272991,Low,"vendor_prior_kev_rate (+0.77); exploitability_score (+0.46); text: ""issue"" (+0.20); vendor_prior_kev_1y (+0.13); text: ""request"" (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-29146,Apache Tomcat,9.0.85,version match,8080,2026-04-09,7.5,HIGH,,Prediction window,0.0006821549840713996,Low,"vendor_prior_kev_rate (+0.78); exploitability_score (+0.44); text: ""issue"" (+0.15); cwe_count (+0.13); availability_impact_NONE (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-55956,Apache Tomcat,9.0.85,version match,8080,2026-06-29,6.5,MEDIUM,,Prediction window,0.0006531511198690035,Low,"vendor_prior_kev_rate (+0.86); exploitability_score (+0.46); text: ""issue"" (+0.20); vendor_prior_kev_1y (+0.13); cwe_other (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-34483,Apache Tomcat,9.0.85,version match,8080,2026-04-09,7.5,HIGH,,Prediction window,0.0005913359660336011,Low,"vendor_prior_kev_rate (+0.79); exploitability_score (+0.44); text: ""issue"" (+0.15); availability_impact_NONE (+0.12); vendor_prior_kev_1y (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-68763,Apache Tomcat,9.0.85,version match,8080,2026-08-25,7.5,HIGH,,Prediction window,0.000584206368892264,Low,"vendor_prior_kev_rate (+0.67); vendor_prior_kev_1y (+0.51); exploitability_score (+0.45); text: ""issue"" (+0.12); text: ""vulnerability"" (+0.09)",internal-app-01
+192.168.1.70,CVE-2026-53404,Apache Tomcat,9.0.85,version match,8080,2026-06-29,7.3,HIGH,,Prediction window,0.0005750565947432839,Low,"vendor_prior_kev_rate (+0.82); exploitability_score (+0.44); text: ""issue"" (+0.22); cwe_other (+0.16); text: ""versions"" (+0.15)",internal-app-01
+192.168.1.70,CVE-2026-65927,Apache Tomcat,9.0.85,version match,8080,2026-08-25,7.5,HIGH,,Prediction window,0.00044712578663759966,Low,"vendor_prior_kev_rate (+0.88); vendor_prior_kev_1y (+0.49); exploitability_score (+0.40); cwe_other (+0.14); text: ""issue"" (+0.14)",internal-app-01
+192.168.1.70,CVE-2026-55957,Apache Tomcat,9.0.85,version match,8080,2026-06-29,7.3,HIGH,,Prediction window,0.00040808339792201343,Low,"vendor_prior_kev_rate (+0.82); exploitability_score (+0.43); cwe_other (+0.18); text: ""issue"" (+0.17); user_interaction_NONE (+0.08)",internal-app-01
+192.168.1.70,CVE-2026-43513,Apache Tomcat,9.0.85,version match,8080,2026-05-12,7.5,HIGH,,Prediction window,0.0004047358099260773,Low,"vendor_prior_kev_rate (+0.77); exploitability_score (+0.44); text: ""issue"" (+0.16); vendor_prior_kev_1y (+0.13); availability_impact_NONE (+0.11)",internal-app-01
+192.168.1.70,CVE-2026-66422,Apache Tomcat,9.0.85,version match,8080,2026-08-25,8.1,HIGH,,Prediction window,0.0003784639554145013,Low,"vendor_prior_kev_rate (+0.95); vendor_prior_kev_1y (+0.51); text: ""issue"" (+0.16); cwe_other (+0.16); text: ""request"" (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-73180,Apache Tomcat,9.0.85,version match,8080,2026-08-25,6.8,MEDIUM,,Prediction window,0.00035425021999831765,Low,"vendor_prior_kev_rate (+0.90); vendor_prior_kev_1y (+0.53); cwe_other (+0.15); text: ""issue"" (+0.14); integrity_impact_NONE (+0.09)",internal-app-01
+192.168.1.70,CVE-2025-61795,Apache Tomcat,9.0.85,version match,8080,2025-10-27,5.3,MEDIUM,,Prediction window,0.0003339920273499115,Low,"vendor_prior_kev_rate (+0.98); vendor_prior_kev_1y (+0.59); cwe_other (+0.17); text: ""issue"" (+0.11); user_interaction_NONE (+0.06)",internal-app-01
+192.168.1.70,CVE-2026-50229,Apache Tomcat,9.0.85,version match,8080,2026-06-29,6.1,MEDIUM,,Prediction window,0.00022411569019895755,Low,"vendor_prior_kev_rate (+1.04); cwe_other (+0.17); text: ""issue"" (+0.16); text: ""web"" (+0.11); vendor_prior_kev_1y (+0.11)",internal-app-01
+192.168.1.70,CVE-2026-41284,Apache Tomcat,9.0.85,version match,8080,2026-05-12,7.5,HIGH,,Prediction window,0.00022247715820105892,Low,"vendor_prior_kev_rate (+0.77); exploitability_score (+0.42); text: ""issue"" (+0.17); cwe_other (+0.14); vendor_prior_kev_1y (+0.12)",internal-app-01
+192.168.1.70,CVE-2026-25854,Apache Tomcat,9.0.85,version match,8080,2026-04-09,6.1,MEDIUM,,Prediction window,0.00014456085052450495,Low,"vendor_prior_kev_rate (+0.96); cwe_other (+0.17); text: ""issue"" (+0.15); vendor_prior_kev_1y (+0.09); integrity_impact_NONE (+0.06)",internal-app-01
+192.168.1.70,CVE-2026-43514,Apache Tomcat,9.0.85,version match,8080,2026-05-12,3.7,LOW,,Prediction window,0.00013520178289920572,Low,"vendor_prior_kev_rate (+0.93); text: ""issue"" (+0.18); cwe_other (+0.10); availability_impact_NONE (+0.09); vendor_prior_kev_1y (+0.08)",internal-app-01
+192.168.1.80,CVE-2023-3341,ISC BIND,9.18.18,version match,53,2023-09-20,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2023-4408,ISC BIND,9.18.18,version match,53,2024-02-13,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2023-50387,ISC BIND,9.18.18,version match,53,2024-02-14,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2023-50868,ISC BIND,9.18.18,version match,53,2024-02-14,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2023-5517,ISC BIND,9.18.18,version match,53,2024-02-13,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2023-5679,ISC BIND,9.18.18,version match,53,2024-02-13,7.5,HIGH,,"Older, not in KEV",,,,dns-server-01
+192.168.1.80,CVE-2026-5946,ISC BIND,9.18.18,version match,53,2026-05-20,7.5,HIGH,,Prediction window,0.0010587310922979347,Low,"cwe_prior_kev (+0.62); exploitability_score (+0.47); vendor_prior_cves (+0.37); text: ""issue"" (+0.25); text: ""code"" (+0.14)",dns-server-01
+192.168.1.80,CVE-2026-1519,ISC BIND,9.18.18,version match,53,2026-03-25,7.5,HIGH,,Prediction window,0.0002742480057088248,Low,"exploitability_score (+0.64); vendor_prior_cves (+0.29); text: ""crafted"" (+0.22); text: ""issue"" (+0.20); cwe_other (+0.14)",dns-server-01
+192.168.1.80,CVE-2026-3592,ISC BIND,9.18.18,version match,53,2026-05-20,5.3,MEDIUM,,Prediction window,0.0001882878619105342,Low,"exploitability_score (+0.59); vendor_prior_cves (+0.32); text: ""crafted"" (+0.23); text: ""issue"" (+0.21); cwe_other (+0.14)",dns-server-01
+192.168.1.80,CVE-2026-3039,ISC BIND,9.18.18,version match,53,2026-05-20,7.5,HIGH,,Prediction window,0.00015852287402476727,Low,"exploitability_score (+0.59); vendor_prior_cves (+0.28); text: ""issue"" (+0.26); cwe_other (+0.11); cwe_count (+0.09)",dns-server-01

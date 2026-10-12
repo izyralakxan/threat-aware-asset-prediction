@@ -1,0 +1,3 @@
+source_asset,target_asset,link_type,probability,description
+V102,V101,Stored credentials,0.9,The web application on app-srv-01 stores the MySQL password for legacy-srv-01 (assumed)
+V103,V102,Admin logon,0.7,The administrator manages app-srv-01 over SSH from ws-01 (assumed)

@@ -1,0 +1,11 @@
+from_segment,to_segment,ports,description
+INTERNET,DMZ,"80,443,8080,8090",Public web services (simulated internet = MGMT/Kali)
+INTERNET,WORKSTATIONS,client,Malicious web content and email attachments
+DMZ,DMZ,any,Flat DMZ
+DMZ,SERVERS,"53,3306,5432",Web tier to databases and DNS
+WORKSTATIONS,WORKSTATIONS,"135,445",Flat workstation network (file sharing and RPC)
+WORKSTATIONS,SERVERS,"53,88,135,389,443,445",Users to domain controller and file services
+SERVERS,SERVERS,any,Flat server network
+MGMT,DMZ,any,Management network administers everything
+MGMT,SERVERS,any,Management network administers everything
+MGMT,WORKSTATIONS,any,Management network administers everything

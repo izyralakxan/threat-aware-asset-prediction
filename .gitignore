@@ -1,0 +1,23 @@
+# Python environment and caches (recreate with: pip install -r requirements.txt)
+.venv/
+__pycache__/
+*.pyc
+
+# Large data, rebuilt by the pipeline (python run_pipeline.py)
+data/processed/
+data/raw/nvd/raw/
+
+# Private or machine-specific data: never upload
+# user accounts, password hashes, MFA secrets, audit log
+data/auth/
+# sent notices
+data/notifications/
+*.eml
+# live-sync downloads (rebuilt automatically every 6 hours)
+data/live/
+.streamlit/secrets.toml
+
+# Office lock files and local tooling
+~$*
+.claude/
+*.log

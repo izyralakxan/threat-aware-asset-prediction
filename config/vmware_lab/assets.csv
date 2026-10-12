@@ -1,0 +1,7 @@
+asset_id,hostname,ip_address,segment,asset_type,operating_system,criticality,internet_exposed,crown_jewel
+V001,pfsense-fw,10.10.99.1,MGMT,Firewall / router,pfSense,High,No,0
+V002,kali-scanner,10.10.99.10,MGMT,Scanner,Kali Linux,Low,No,0
+V010,dmz-web-01,10.10.10.10,DMZ,Web and application server,Ubuntu Server 24.04,High,Yes,0
+V020,dc-01,10.10.20.10,SERVERS,Domain Controller,Windows Server 2022,High,No,1
+V021,srv-db-01,10.10.20.30,SERVERS,Database Server,Ubuntu Server 24.04,High,No,1
+V030,ws-01,10.10.30.101,WORKSTATIONS,Workstation,Windows 11,Medium,No,0

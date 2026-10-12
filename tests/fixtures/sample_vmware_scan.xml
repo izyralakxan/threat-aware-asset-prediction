@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  HAND-WRITTEN TEST FIXTURE in Nmap XML format, using the planned VMware
+  lab addresses (config/vmware_lab). Not a real scan: used to test
+  src/lab/import_scans.py before the lab VMs exist.
+-->
+<nmaprun scanner="nmap" args="nmap -sV -oX sample_vmware_scan.xml 10.10.10.0/24 10.10.20.0/24 10.10.30.0/24" start="1791374400" startstr="Wed Oct  7 10:00:00 2026" version="7.95" xmloutputversion="1.05">
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="10.10.10.10" addrtype="ipv4"/>
+    <hostnames><hostname name="dmz-web-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="22">
+        <state state="open" reason="syn-ack"/>
+        <service name="ssh" product="OpenSSH" version="9.6p1 Ubuntu 3ubuntu13.5" method="probed" conf="10">
+          <cpe>cpe:/a:openbsd:openssh:9.6p1</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Apache httpd" version="2.4.49" extrainfo="(Unix)" method="probed" conf="10">
+          <cpe>cpe:/a:apache:http_server:2.4.49</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="8080">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Jetty" version="10.0.18" method="probed" conf="10">
+          <cpe>cpe:/a:eclipse:jetty:10.0.18</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="10.10.20.10" addrtype="ipv4"/>
+    <hostnames><hostname name="dc-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="53">
+        <state state="open" reason="syn-ack"/>
+        <service name="domain" product="Simple DNS Plus" method="probed" conf="10"/>
+      </port>
+      <port protocol="tcp" portid="389">
+        <state state="open" reason="syn-ack"/>
+        <service name="ldap" product="Microsoft Windows Active Directory LDAP" method="probed" conf="10">
+          <cpe>cpe:/o:microsoft:windows</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="445">
+        <state state="open" reason="syn-ack"/>
+        <service name="microsoft-ds" method="table" conf="3"/>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="10.10.20.30" addrtype="ipv4"/>
+    <hostnames><hostname name="srv-db-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="3306">
+        <state state="open" reason="syn-ack"/>
+        <service name="mysql" product="MySQL" version="8.0.33" method="probed" conf="10">
+          <cpe>cpe:/a:mysql:mysql:8.0.33</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="10.10.30.150" addrtype="ipv4"/>
+    <hostnames/>
+    <ports>
+      <port protocol="tcp" portid="445">
+        <state state="open" reason="syn-ack"/>
+        <service name="microsoft-ds" method="table" conf="3"/>
+      </port>
+    </ports>
+  </host>
+</nmaprun>

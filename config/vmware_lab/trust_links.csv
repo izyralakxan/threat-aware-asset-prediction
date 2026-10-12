@@ -1,0 +1,4 @@
+source_asset,target_asset,link_type,probability,description
+V010,V021,Stored credentials,0.9,Web applications on dmz-web-01 hold the database password for srv-db-01
+V030,V020,Admin logon,0.8,A domain admin logs on to dc-01 from ws-01
+V020,V030,Domain admin,0.95,Domain controller controls the domain-joined workstation

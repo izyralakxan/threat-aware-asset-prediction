@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  HAND-WRITTEN TEST FIXTURE in Nmap XML format (nmap -sV -oX).
+  Not a real scan: used to test the parser and exposure pipeline until
+  the VMware lab targets exist. Replace with real scans from the lab.
+-->
+<nmaprun scanner="nmap" args="nmap -sV -oX sample_nmap_scan.xml 192.168.1.0/24" start="1791021600" startstr="Sat Oct  3 10:00:00 2026" version="7.95" xmloutputversion="1.05">
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.1.10" addrtype="ipv4"/>
+    <hostnames><hostname name="web-server-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Apache httpd" version="2.4.58" extrainfo="(Ubuntu)" method="probed" conf="10">
+          <cpe>cpe:/a:apache:http_server:2.4.58</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="443">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Apache httpd" version="2.4.58" extrainfo="(Ubuntu)" tunnel="ssl" method="probed" conf="10">
+          <cpe>cpe:/a:apache:http_server:2.4.58</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.1.40" addrtype="ipv4"/>
+    <hostnames><hostname name="mail-server-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="25">
+        <state state="open" reason="syn-ack"/>
+        <service name="smtp" product="Postfix smtpd" method="probed" conf="10">
+          <cpe>cpe:/a:postfix:postfix</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="443">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="nginx" version="1.24.0" tunnel="ssl" method="probed" conf="10">
+          <cpe>cpe:/a:igor_sysoev:nginx:1.24.0</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.1.70" addrtype="ipv4"/>
+    <hostnames><hostname name="internal-app-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="8080">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="Apache Tomcat" version="9.0.85" method="probed" conf="10">
+          <cpe>cpe:/a:apache:tomcat:9.0.85</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.1.80" addrtype="ipv4"/>
+    <hostnames><hostname name="dns-server-01" type="PTR"/></hostnames>
+    <ports>
+      <port protocol="tcp" portid="53">
+        <state state="open" reason="syn-ack"/>
+        <service name="domain" product="ISC BIND" version="9.18.18-0ubuntu0.22.04.1" extrainfo="Ubuntu Linux" method="probed" conf="10">
+          <cpe>cpe:/a:isc:bind:9.18.18-0ubuntu0.22.04.1</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+  <host>
+    <status state="up" reason="arp-response"/>
+    <address addr="192.168.1.200" addrtype="ipv4"/>
+    <hostnames/>
+    <ports>
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="lighttpd" method="probed" conf="10">
+          <cpe>cpe:/a:lighttpd:lighttpd</cpe>
+        </service>
+      </port>
+    </ports>
+  </host>
+</nmaprun>
