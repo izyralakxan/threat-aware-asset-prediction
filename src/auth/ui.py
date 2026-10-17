@@ -146,7 +146,7 @@ def _password_stage():
     with st.form("login", clear_on_submit=False):
         username = st.text_input("Username", key="login_username").strip().lower()
         password = st.text_input("Password", type="password", key="login_password")
-        submitted = st.form_submit_button("Continue", type="primary", use_container_width=True)
+        submitted = st.form_submit_button("Continue", type="primary", width="stretch")
     if not submitted:
         return
 
@@ -180,7 +180,7 @@ def _change_password_stage(user):
     with st.form("change_password"):
         new = st.text_input("New password", type="password")
         again = st.text_input("Repeat new password", type="password")
-        submitted = st.form_submit_button("Save password", type="primary", use_container_width=True)
+        submitted = st.form_submit_button("Save password", type="primary", width="stretch")
     st.caption("At least 12 characters, using three of: lowercase, uppercase, digits, symbols.")
     if not submitted:
         return
@@ -225,7 +225,7 @@ def _mfa_stage(user):
     _card("Two-factor authentication", f"Enter the 6-digit code from your authenticator app.")
     with st.form("mfa"):
         code = st.text_input("Authentication code", max_chars=6)
-        submitted = st.form_submit_button("Sign in", type="primary", use_container_width=True)
+        submitted = st.form_submit_button("Sign in", type="primary", width="stretch")
     if st.button("Back to sign in"):
         _sign_out("login_cancelled")
         st.rerun()

@@ -249,6 +249,59 @@ detection, time limit), every scan is audit-logged, and results are saved in
 `data/lab/scans/` and listed under *Scan upload*. Lab hosts are described in
 `config/virtualbox_lab/inventory.csv`.
 
+## Fix tracking (completed vs remaining, verified by rescans)
+
+`src/remediation/tracker.py` remembers every upgrade the planner recommends, per network
+(`data/remediation_tracker.csv`), and checks each newer scan: **Completed** when the scan
+reads a version that is no longer vulnerable (or the service is gone), **Remaining** when the
+vulnerable version is still there, **Not verified** when the device was not scanned or its
+version could not be read. A fix is never marked done without a scan proving it; a completed
+fix is reopened if a later scan shows the problem again, and older scans never change the
+record. The Fix first step shows "Fixes completed: X of Y", done/remaining per device and the
+verified fixes (e.g. Apache Tomcat 9.0.98 → 9.0.123 on app-srv-01, verified by rescan).
+
+## Network watch (devices joining or leaving)
+
+`src/asset_discovery/asset_watcher.py` runs a quick discovery sweep (hosts up, no service
+scan; about 10 s) of `watch_targets` in `config/scan_targets.json` every 30 seconds:
+
+- a **new device** is reported and a full service/version scan of the hosts that are up
+  starts automatically (about 1 minute), saved in `data/lab/scans/` for the dashboard;
+- a device **missing for 3 checks in a row** (about 90 s) is reported as removed, so
+  reboots do not raise false alarms; a removed device that returns is reported as back.
+
+Events go to `data/lab/watch_events.csv` and the audit log; the dashboard's Discover step
+shows the last check and recent events. The Windows task "ThreatAware Asset Watcher"
+(`scripts\register_asset_watcher_task.ps1`) starts every minute and runs two checks 30 s
+apart. Instant detection (DHCP/ARP listening, 802.1X, endpoint agents) is future work.
+
+## Unsafe settings, ransomware warnings and unknown devices
+
+- **Unsafe settings (misconfigurations).** The live scan also runs safe, read-only Nmap check
+  scripts (`src/asset_exposure/misconfig.py`): open backdoor shells, databases or Redis without
+  a password, anonymous FTP, Telnet and rsh/rexec/rlogin, SMBv1, NFS shares open to everyone,
+  VNC/X11 without a password, expired certificates, outdated TLS and SSHv1. Each finding has a
+  severity, the risk in plain words and the fix. They appear in the Fix first step, in the
+  team email, and in the fix tracker (Completed once a rescan no longer finds them).
+- **Ransomware warning.** Vulnerabilities that CISA KEV marks as used in ransomware campaigns
+  are tagged on the device, in the update list and in the weakness table. Ransomware use breaks
+  ties between equally urgent devices; the priority scores themselves are unchanged.
+- **Unknown device alert.** When the network watcher sees a new device that is not in the asset
+  list, it records an "unknown device" event and emails the security team
+  (`security_team_email` in `config/notifications.json`). The Discover step shows a red banner
+  and an "In asset list?" column.
+
+## Automatic fix reminders
+
+If a device's team was sent fix instructions and, 24 hours later, the latest scan still
+shows fixes as Remaining, the same recipients get a reminder email listing the open fixes
+and deadlines (overdue ones marked). It repeats every 24 hours until a scan proves the fixes
+are applied. No reminder is sent before a team has been notified. The Windows task
+"ThreatAware Fix Reminders" (`scripts\register_fix_reminders_task.ps1`) checks every hour;
+reminders are logged in `data/notifications/reminders.csv` and the audit log. The delay is
+`reminder_after_hours` in `config/notifications.json`. Test with
+`python -m src.notify.reminders --dry-run` or `--now "YYYY-MM-DD HH:MM"`.
+
 ## VMware lab (real scans, optional)
 
 Build guide: [docs/VMWARE_LAB_GUIDE.md](docs/VMWARE_LAB_GUIDE.md). Lab layout,

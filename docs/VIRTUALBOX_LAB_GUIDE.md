@@ -179,6 +179,14 @@ The lab on this PC was built on 12 Oct 2026 and stored in `D:\VirtualBox VMs`
 | legacy-srv-01 | 192.168.56.101 | msfadmin / msfadmin | 25 services: vsftpd 2.3.4, OpenSSH 4.7p1, BIND 9.4.2, Apache 2.2.8, ProFTPD 1.3.1, MySQL 5.0.51a, PostgreSQL 8.3, Samba, UnrealIRCd and more |
 | app-srv-01 | 192.168.56.102 | root / LabRoot-2026! | OpenSSH 10.3, Apache httpd 2.4.62, Apache Tomcat 9.0.98, Redis 7.2.4 |
 | ws-01 | 192.168.56.103 | root / LabRoot-2026! | OpenSSH 10.3 |
+| rogue-01 | 192.168.56.120 | root / LabRoot-2026! | OpenSSH 10.3. A clone of ws-01 (128 MB) that is deliberately NOT in the asset list: normally off, started only to demonstrate the unknown-device alert |
+
+**Unknown device demo:** `scripts\lab\lab.ps1 rogue-on`. Within about a minute the
+network watcher reports a new device, scans it, finds it is not in the asset list,
+emails the security team and the Discover step shows a red "Unknown device" banner.
+`lab.ps1 rogue-off` afterwards; once it has been missing for 3 checks, the next
+`rogue-on` raises a fresh alert. Then rescan the network so the latest scan no longer
+contains it.
 
 First live scan: 3 hosts, 29 open services, 55 seconds. legacy-srv-01 and app-srv-01
 are Critical (16 and 1 CISA KEV vulnerabilities; ML predictions on their recent CVEs).

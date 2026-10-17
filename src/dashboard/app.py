@@ -32,6 +32,7 @@ from src.asset_discovery.run_nmap import (  # noqa: E402
 )
 from src.lab.lab_db import DB_FILE, list_snapshots, load_snapshot, load_topology  # noqa: E402
 from src.lab.vbox import lab_status, start_lab  # noqa: E402
+from src.asset_exposure.misconfig import SEVERITY_ORDER, checks_ran, find_settings  # noqa: E402
 from src.asset_exposure.importance import (  # noqa: E402
     CIA, FILE as IMPORTANCE_FILE, LEVELS, apply as apply_importance, load as load_importance,
     network_key, overall, save as save_importance, suggest_cia,
@@ -48,6 +49,9 @@ from src.notify.notifier import (  # noqa: E402
     load_kev_details, overview, parse_recipients, recipient_problems, vulnerability_details,
 )
 from src.remediation.planner import SLA_DAYS, plan_actions, weekly_plan  # noqa: E402
+from src.remediation.tracker import (  # noqa: E402
+    COLUMNS as TRACKER_COLUMNS, FILE as TRACKER_FILE, update as track_fixes,
+)
 from src.evaluation.plan_comparison import CURVE_FILE, METHODS, PLANS, compare_plans  # noqa: E402
 from src.attack_paths.attack_graph import (  # noqa: E402
     BAND_COLORS, REACHED_THRESHOLD, analyse, to_dot,
@@ -311,6 +315,12 @@ _seen["stamp"] = live_stamp()
 def run_assessment(scan_bytes, inventory_bytes):
     inventory = pd.read_csv(io.BytesIO(inventory_bytes))
     return assess(io.BytesIO(scan_bytes), inventory, reference_data())
+
+
+@st.cache_data(show_spinner=False)
+def scan_settings(scan_bytes):
+    """Unsafe settings in an Nmap XML scan, and whether its check scripts ran."""
+    return find_settings(scan_bytes), checks_ran(scan_bytes)
 
 
 @st.cache_data(show_spinner="Assessing scan sheet...")
@@ -756,6 +766,13 @@ else:
 
 scan_time = services["scan_time"].iloc[0]
 
+# Unsafe settings found by the scan's safe check scripts (Nmap XML only; scan sheets have none)
+settings, settings_checked = pd.DataFrame(columns=["ip_address", "ports", "check", "severity", "finding",
+                                                  "risk", "fix"]), False
+if source != "Lab database" and not scan_name.lower().endswith(".csv"):
+    settings, settings_checked = scan_settings(scan_bytes)
+    settings = settings[settings["ip_address"].isin(set(services["ip_address"]))]
+
 # Asset Owners see only the assets their team owns (data scoping)
 owned_assets = None
 if not can(user, "view_all_assets"):
@@ -862,7 +879,8 @@ if page == "home":
     def reason(row):
         if row["known_exploited"]:
             n = int(row["known_exploited"])
-            return f"{n} weakness{'es are' if n != 1 else ' is'} being used by attackers right now"
+            return (f"{n} weakness{'es are' if n != 1 else ' is'} being used by attackers right now"
+                    + (f", {row['ransomware']} of them by ransomware gangs" if row["ransomware"] else ""))
         likely = int(row["critical_tier_cves"] + row["high_tier_cves"])
         if likely:
             return f"{likely} new weakness{'es are' if likely != 1 else ' is'} likely to be attacked soon"
@@ -870,13 +888,32 @@ if page == "home":
             return "Runs software that attackers target often"
         if row["unconfirmed_cves"]:
             return "Software version could not be read: check it manually"
+        if row["unsafe_settings"]:
+            return "No urgent software updates, but unsafe settings were found"
         return "No urgent problems found"
 
-    devices = scanned.sort_values(["priority_score", "expected_new_exposure_12m"], ascending=False)
-    devices = devices.reset_index(drop=True)
+    RANSOMWARE_TAG = ("<span style='background:#7f1d1d;color:#fecaca;font-weight:800;padding:3px 10px;"
+                      "border-radius:999px;font-size:0.8rem;white-space:nowrap'>Ransomware</span>")
+    SEVERITY_COLOUR = {"Critical": "#f87171", "High": "#fb923c", "Medium": "#fbbf24", "Low": "#94a3b8"}
+
+    # CISA KEV: vulnerabilities known to be used in ransomware campaigns (confirmed matches)
+    ransom_ids = set(kev_details().index[kev_details()["known_ransomware_campaign_use"]
+                                         .fillna("").str.lower() == "known"])
+    ransom_cves = cves[cves["cve_id"].isin(ransom_ids) & cves["match_confidence"].isin(CONFIRMED)]
+    ransom_count = ransom_cves.groupby("ip_address")["cve_id"].nunique()
+    setting_count = settings.groupby("ip_address").size()
+    # Ransomware use breaks ties between equally urgent devices (scores are unchanged)
+    devices = scanned.assign(ransomware=scanned["ip_address"].map(ransom_count).fillna(0).astype(int),
+                             unsafe_settings=scanned["ip_address"].map(setting_count).fillna(0).astype(int))
+    devices = devices.sort_values(["priority_score", "ransomware", "expected_new_exposure_12m"],
+                                  ascending=False).reset_index(drop=True)
     counts = devices["exposure_level"].value_counts()
     best_fix = (plan_all.sort_values("risk_removed", ascending=False).drop_duplicates("asset_id")
                 .set_index("asset_id") if not plan_all.empty else pd.DataFrame())
+    # Which recommended fixes are done, verified by comparing this scan with earlier ones
+    fixes = (track_fixes(network, scan_time, plan_all, services, scanned, PROJECT_ROOT / TRACKER_FILE,
+                         settings, settings_checked)
+             if network else pd.DataFrame(columns=TRACKER_COLUMNS))
 
     # Header
     head_text, head_button = st.columns([4, 1], vertical_alignment="center")
@@ -924,6 +961,31 @@ if page == "home":
 
     if step == STEPS[0]:
         st.subheader("Devices discovered on the network")
+        # Background network watch (src/asset_discovery/asset_watcher.py): devices joining or leaving
+        watch_state = PROJECT_ROOT / "data" / "lab" / "watch_state.json"
+        watch_events = PROJECT_ROOT / "data" / "lab" / "watch_events.csv"
+        if watch_state.exists():
+            import json as json_lib
+            watch = json_lib.loads(watch_state.read_text(encoding="utf-8"))
+            st.caption(f"Network watch: last check {watch.get('last_check', '?')} · "
+                       f"{watch.get('online', 0)} devices online · checks every "
+                       f"{watch.get('interval_seconds', 30)} seconds")
+            if watch_events.exists():
+                recent = pd.read_csv(watch_events)
+                recent = recent[recent["event"].isin(["new device", "unknown device", "device removed",
+                                                      "device back"])
+                                & (pd.to_datetime(recent["time"]) >= pd.Timestamp.now() - pd.Timedelta(hours=24))]
+                names = devices.set_index("ip_address")["hostname"].dropna().to_dict()
+                for e in recent.tail(5).iloc[::-1].itertuples(index=False):
+                    who = (f"{names[e.ip_address]} ({e.ip_address})" if e.ip_address in names
+                           else e.ip_address)
+                    text = {"new device": f"New device joined: **{who}**, scanned automatically",
+                            "unknown device": f"Unknown device: **{who}** is not in the asset list, "
+                                              "security team alerted",
+                            "device removed": f"Device removed or offline: **{who}**",
+                            "device back": f"Device back online: **{who}**"}[e.event]
+                    (st.error if e.event == "unknown device" else st.warning if e.event == "device removed"
+                     else st.info)(f"{e.time[11:16]} · {text}")
         found = services.assign(software=services["product"].fillna(services["service"]).fillna("unknown")
                                 + services["version"].map(lambda v: f" {v}" if isinstance(v, str) and v else ""))
         per_host = found.groupby("ip_address").agg(
@@ -932,11 +994,20 @@ if page == "home":
         table = devices[["hostname", "ip_address", "asset_type"]].merge(
             per_host, left_on="ip_address", right_index=True, how="left")
         table["hostname"] = table["hostname"].fillna(table["ip_address"])
+        table["asset_type"] = table["asset_type"].fillna("Unknown device")
+        unknown = devices[devices["scan_status"].str.startswith("Unmanaged")]
+        table["in_list"] = table["ip_address"].map(
+            lambda ip: "No: unknown device" if ip in set(unknown["ip_address"]) else "Yes")
+        for u in unknown.itertuples(index=False):
+            st.error(f"**Unknown device on the network: {u.ip_address}** is not in the company asset list. "
+                     "Find out who connected it. If nobody approved it, disconnect it: unknown devices are "
+                     "a common way attackers get in.")
         st.caption(f"{len(table)} devices and {len(services)} running services found. The scan reads "
                    "each service's software and version, which is what vulnerabilities are matched on.")
-        st.dataframe(table, hide_index=True, use_container_width=True, column_config={
+        st.dataframe(table, hide_index=True, width="stretch", column_config={
             "hostname": "Device", "ip_address": "IP address", "asset_type": "What it is",
-            "open_ports": "Open ports", "software": st.column_config.TextColumn("Software found", width="large")})
+            "open_ports": "Open ports", "software": st.column_config.TextColumn("Software found", width="large"),
+            "in_list": "In asset list?"})
         next_button("Next: how important is each device?", STEPS[1])
 
     elif step == STEPS[1]:
@@ -968,7 +1039,7 @@ if page == "home":
             level = st.column_config.SelectboxColumn
             edited = st.data_editor(
                 editable[["ip_address", "hostname", "asset_type"] + CIA + ["internet_exposed"]],
-                key=f"importance_{network}", hide_index=True, use_container_width=True,
+                key=f"importance_{network}", hide_index=True, width="stretch",
                 disabled=["ip_address"], column_config={
                     "ip_address": "IP address", "hostname": "Device name", "asset_type": "What it is",
                     "confidentiality": level("Data stolen? (C)", options=LEVELS, required=True),
@@ -1020,6 +1091,13 @@ if page == "home":
             st.subheader("Patch these first")
             st.caption("Most urgent at the top: likelihood of attack × business importance × "
                        "internet exposure.")
+            if not fixes.empty:
+                done = int((fixes["status"] == "Completed").sum())
+                waiting = int((fixes["status"] == "Not verified").sum())
+                st.progress(done / len(fixes), text=f"Fixes completed: {done} of {len(fixes)}")
+                st.caption(f"{len(fixes) - done - waiting} remaining"
+                           + (f" · {waiting} not verified (device not in the latest scan)" if waiting else "")
+                           + ". A fix counts as completed only when a new scan shows it.")
             for rank, row in devices.iterrows():
                 with st.container(border=True, key=f"device_{rank}"):
                     info, action = st.columns([3.2, 1.2], vertical_alignment="center")
@@ -1027,8 +1105,20 @@ if page == "home":
                     fix_line = (f"<br><span style='color:#94a3b8;font-size:0.85rem'>Main fix: upgrade "
                                 f"{fix['product']} {fix['installed_version']} → {fix['target_version']}"
                                 "</span>") if fix is not None else ""
+                    if row["unsafe_settings"]:
+                        worst = settings[settings["ip_address"] == row["ip_address"]]["severity"].iloc[0]
+                        fix_line += (f"<br><span style='font-size:0.85rem;color:{SEVERITY_COLOUR[worst]}'>"
+                                     f"{row['unsafe_settings']} unsafe setting"
+                                     f"{'s' if row['unsafe_settings'] != 1 else ''} (worst: {worst})</span>")
+                    own = fixes[fixes["ip_address"] == row["ip_address"]] if not fixes.empty else fixes
+                    if not own.empty:
+                        done_here = int((own["status"] == "Completed").sum())
+                        fix_line += (f"<br><span style='font-size:0.85rem;color:"
+                                     f"{'#4ade80' if done_here == len(own) else '#fbbf24'}'>Fixes: "
+                                     f"{done_here} done · {len(own) - done_here} remaining</span>")
                     info.markdown(
-                        f"<b>{rank + 1}. {row['hostname']}</b> &nbsp;{badge(row['exposure_level'])}<br>"
+                        f"<b>{rank + 1}. {row['hostname']}</b> &nbsp;{badge(row['exposure_level'])}"
+                        f"{' &nbsp;' + RANSOMWARE_TAG if row['ransomware'] else ''}<br>"
                         f"<span style='color:#94a3b8;font-size:0.85rem'>{row['asset_type']} · "
                         f"{row['ip_address']}</span><br>{reason(row)}{fix_line}",
                         unsafe_allow_html=True)
@@ -1041,47 +1131,107 @@ if page == "home":
             device = devices[devices["asset_id"] == chosen].iloc[0]
             actions = plan_all[plan_all["asset_id"] == chosen] if not plan_all.empty else plan_all
             st.subheader(f"How to fix {device['hostname']}")
-            st.markdown(f"{badge(device['exposure_level'])} &nbsp; {device['asset_type']} · "
+            st.markdown(f"{badge(device['exposure_level'])}"
+                        f"{' &nbsp;' + RANSOMWARE_TAG if device['ransomware'] else ''} &nbsp; {device['asset_type']} · "
                         f"{device['ip_address']} · business importance: {device['criticality']} · "
                         f"internet-facing: {device['internet_exposed']}", unsafe_allow_html=True)
 
-            if actions.empty:
-                st.success("No software updates are needed for this device right now.")
+            device_fixes = fixes[fixes["ip_address"] == device["ip_address"]] if not fixes.empty else fixes
+            completed = device_fixes[device_fixes["status"] == "Completed"] if not device_fixes.empty else device_fixes
+
+            device_settings = settings[settings["ip_address"] == device["ip_address"]]
+
+            def show_completed():
+                if completed.empty:
+                    return
+                st.markdown("##### Completed (verified by scan)")
+                for c in completed.itertuples(index=False):
+                    what = (f"**{c.product.removeprefix('Setting: ')}** (unsafe setting): {c.note}"
+                            if c.kind == "setting" else
+                            f"**{c.product}**: {c.start_version} → {c.current_version or 'removed'} · {c.note}")
+                    st.markdown(
+                        f"<span style='background:#22c55e;color:#0b1220;font-weight:800;padding:2px 9px;"
+                        f"border-radius:999px;font-size:0.78rem'>Done</span> &nbsp;{what} · "
+                        f"{c.completed_at}", unsafe_allow_html=True)
+
+            if actions.empty and device_settings.empty:
+                if completed.empty:
+                    st.success("No software updates are needed for this device right now.")
+                else:
+                    st.success("All recommended updates for this device are completed.")
+                    show_completed()
             else:
-                details = vulnerability_details(
+                details = (vulnerability_details(
                     actions, cves[cves["ip_address"] == device["ip_address"]],
                     reference_data()["scoring"], kev_details(), notify_config.get("max_cves_in_email", 10))
-                st.info(overview(device.to_dict(), actions, details))
+                    if not actions.empty else None)
+                if details:
+                    st.info(overview(device.to_dict(), actions, details))
+                if device["ransomware"]:
+                    st.error(f"**Ransomware warning:** {device['ransomware']} of the weaknesses on this device "
+                             "are used by ransomware gangs (CISA KEV). Ransomware encrypts the organisation's "
+                             "data and demands payment, so fix these first.")
 
-                st.markdown("##### Step 1 · Install these updates")
-                for number, a in enumerate(actions.sort_values("risk_removed", ascending=False)
-                                           .itertuples(index=False), start=1):
-                    exploited = (f", **{a.kev_fixed} being used by attackers**" if a.kev_fixed else "")
-                    overdue = " ⚠️ **overdue**" if a.urgency == "OVERDUE" else ""
-                    st.markdown(f"{number}. Upgrade **{a.product}** from {a.installed_version} to "
-                                f"**{a.target_version}** or later: fixes {a.cves_fixed} "
-                                f"weakness{'es' if a.cves_fixed != 1 else ''}{exploited}. "
-                                f"Deadline: {a.deadline}{overdue}")
+                step_no = 1
+                if not actions.empty:
+                    st.markdown(f"##### Step {step_no} · Install these updates")
+                    step_no += 1
+                    for number, a in enumerate(actions.sort_values("risk_removed", ascending=False)
+                                               .itertuples(index=False), start=1):
+                        exploited = (f", **{a.kev_fixed} being used by attackers**" if a.kev_fixed else "")
+                        in_ransomware = len(set(a.fixed_cve_ids.split(";")) & ransom_ids)
+                        if in_ransomware:
+                            exploited += f" (**{in_ransomware} by ransomware**)"
+                        overdue = " ⚠️ **overdue**" if a.urgency == "OVERDUE" else ""
+                        st.markdown(f"<span style='background:#fbbf24;color:#0b1220;font-weight:800;"
+                                    f"padding:2px 9px;border-radius:999px;font-size:0.78rem'>Remaining</span> "
+                                    f"&nbsp;{number}. Upgrade **{a.product}** from {a.installed_version} to "
+                                    f"**{a.target_version}** or later: fixes {a.cves_fixed} "
+                                    f"weakness{'es' if a.cves_fixed != 1 else ''}{exploited}. "
+                                    f"Deadline: {a.deadline}{overdue}", unsafe_allow_html=True)
 
-                interim = list(dict.fromkeys(r["interim"] for r in details["rows"]))
+                if not device_settings.empty:
+                    st.markdown(f"##### Step {step_no} · Fix these unsafe settings")
+                    step_no += 1
+                    st.caption("Found by safe checks during the scan. These are not software bugs, so no "
+                               "update fixes them: the setting itself must be changed.")
+                    tracked = (fixes[fixes["ip_address"] == device["ip_address"]]
+                               .set_index("product")["deadline"].to_dict() if not fixes.empty else {})
+                    for s in device_settings.itertuples(index=False):
+                        due = tracked.get(f"Setting: {s.check}", "")
+                        st.markdown(
+                            f"<span style='background:{SEVERITY_COLOUR[s.severity]};color:#0b1220;font-weight:800;"
+                            f"padding:2px 9px;border-radius:999px;font-size:0.78rem'>{s.severity}</span> "
+                            f"&nbsp;**{s.finding}** (port {s.ports})<br>"
+                            f"<span style='color:#94a3b8;font-size:0.9rem'>Risk: {s.risk}</span><br>"
+                            f"Fix: {s.fix}" + (f" Deadline: {due}" if due else ""), unsafe_allow_html=True)
+                elif not settings_checked and network == "lab":
+                    st.caption("This scan did not run the settings checks. Scan the network again to check "
+                               "for unsafe settings.")
+                show_completed()
+
+                interim = list(dict.fromkeys(r["interim"] for r in details["rows"])) if details else []
                 if interim:
-                    st.markdown("##### Step 2 · Until it is patched, reduce the risk")
+                    st.markdown(f"##### Step {step_no} · Until it is patched, reduce the risk")
+                    step_no += 1
                     for step in interim[:4]:
                         st.markdown(f"- {step}")
 
-                with st.expander(f"See the weaknesses ({len(details['rows'])} most urgent of "
-                                 f"{details['total']})"):
-                    st.dataframe(pd.DataFrame([{
-                        "CVE": r["cve_id"], "CVSS": r["cvss"],
-                        "Exploited?": {"exploited": "Yes, now", "predicted": "Likely soon",
-                                       "low": "No"}[r["level"]],
-                        "Attack type (MITRE ATT&CK)": r["tactic"], "What it is": r["summary"],
-                    } for r in details["rows"]]), hide_index=True, use_container_width=True,
-                        column_config={"CVSS": st.column_config.NumberColumn(format="%.1f"),
-                                       "What it is": st.column_config.TextColumn(width="large")})
+                if details:
+                    with st.expander(f"See the weaknesses ({len(details['rows'])} most urgent of "
+                                     f"{details['total']})"):
+                        st.dataframe(pd.DataFrame([{
+                            "CVE": r["cve_id"], "CVSS": r["cvss"],
+                            "Exploited?": {"exploited": "Yes, now", "predicted": "Likely soon",
+                                           "low": "No"}[r["level"]],
+                            "Ransomware?": "Yes" if r["ransomware"] else "",
+                            "Attack type (MITRE ATT&CK)": r["tactic"], "What it is": r["summary"],
+                        } for r in details["rows"]]), hide_index=True, width="stretch",
+                            column_config={"CVSS": st.column_config.NumberColumn(format="%.1f"),
+                                           "What it is": st.column_config.TextColumn(width="large")})
 
                 if can(user, "send_notifications"):
-                    st.markdown("##### Step 3 · Send the fix instructions to the owning team")
+                    st.markdown(f"##### Step {step_no} · Send the fix instructions to the owning team")
                     owner_rows = auth_store.owners(notify_lab)
                     owner_rows = owner_rows[owner_rows["asset_id"] == chosen]
                     team = owner_rows["team"].iloc[0] if not owner_rows.empty else "device owner"
@@ -1089,7 +1239,11 @@ if page == "home":
                     recipients_text = st.text_input("Team email", value=team_email or "",
                                                     key=f"home_recipients_{chosen}",
                                                     placeholder="e.g. netteam@company.local")
-                    message = compose(device.to_dict(), actions, user, team, "", None, notify_config, details)
+                    tracked = (fixes[fixes["ip_address"] == device["ip_address"]]
+                               .set_index("product")["deadline"] if not fixes.empty else pd.Series(dtype=str))
+                    message = compose(device.to_dict(), actions, user, team, "", None, notify_config, details,
+                                      device_settings.assign(deadline=("Setting: " + device_settings["check"])
+                                                             .map(tracked).fillna("")))
                     recipients = parse_recipients(recipients_text)
                     problems = recipient_problems(recipients, notify_config) if recipients_text else []
                     with st.expander("Preview the email"):
@@ -1172,12 +1326,12 @@ if page == "home":
                          f"device{'s' if len(likely) != 1 else ''}** "
                          f"({', '.join(likely['hostname'])}), including **{len(important)} of high "
                          "business importance**.")
-            st.graphviz_chart(dot, use_container_width=True)
+            st.graphviz_chart(dot, width="stretch")
             st.caption("Red = likely, orange = possible, yellow = unlikely. Solid arrow = exploiting a "
                        "weakness; dashed = a trust link such as stored passwords. ★ = high business importance.")
             if not others.empty:
                 st.dataframe(others[["hostname", "probability", "path", "how"]], hide_index=True,
-                             use_container_width=True, column_config={
+                             width="stretch", column_config={
                                  "hostname": "Device reached",
                                  "probability": st.column_config.ProgressColumn(
                                      "Chance", format="percent", min_value=0, max_value=1),
@@ -1317,7 +1471,7 @@ if tab_overview is not None:
             labels = bars.mark_text(align="left", dx=6, fontWeight="bold").encode(
                 text="assets:Q", color=alt.value("#7a8591"))
             st.altair_chart((bars + labels).properties(height=48 * len(present) + 30),
-                            use_container_width=True)
+                            width="stretch")
 
         with chart_right:
             st.markdown("**Risk matrix: likelihood vs business impact**")
@@ -1352,7 +1506,7 @@ if tab_overview is not None:
                 align="right", fontWeight="bold", color="#b71c1c").encode(x="x:Q", y="y:Q", text="t:N")
 
             st.altair_chart((vline + hline + points + note).properties(height=320),
-                            use_container_width=True)
+                            width="stretch")
             st.caption("Right of the dashed line: at least one exploitation expected within a year. "
                        "Top right: likely to be attacked and important to the business.")
 
@@ -1375,7 +1529,7 @@ if tab_overview is not None:
         priority_labels = priority_bars.mark_text(align="left", dx=5).encode(
             text=alt.Text("priority_score:Q", format=".2f"), color=alt.value("#7a8591"))
         st.altair_chart((priority_bars + priority_labels).properties(height=34 * len(top) + 40),
-                        use_container_width=True)
+                        width="stretch")
 
         st.subheader("Assets ranked by priority")
         st.caption(
@@ -1396,7 +1550,7 @@ if tab_overview is not None:
         st.dataframe(
             table.style.map(tint_level, subset=["exposure_level"]),
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
             column_config={
                 "asset_id": "Asset",
                 "hostname": "Hostname",
@@ -1476,7 +1630,7 @@ if tab_detail is not None:
                                "exploited_doors_after", "risk_removed", "deadline", "urgency"]]
                 .style.map(lambda v: "color: #b71c1c; font-weight: 700" if v == "OVERDUE" else "",
                            subset=["urgency"]),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "action": st.column_config.TextColumn("Action", width="large"),
                     "cves_fixed": st.column_config.NumberColumn("CVEs fixed"),
@@ -1503,7 +1657,7 @@ if tab_detail is not None:
                 st.dataframe(
                     options.assign(share=options["risk_reduction"] / containment.crown_risk
                                    if containment.crown_risk else 0)[["action", "type", "share"]],
-                    hide_index=True, use_container_width=True,
+                    hide_index=True, width="stretch",
                     column_config={
                         "action": st.column_config.TextColumn("Containment action", width="large"),
                         "type": "Type",
@@ -1517,7 +1671,7 @@ if tab_detail is not None:
             service_columns.append("source")
         st.dataframe(
             services[services["ip_address"] == ip][service_columns],
-            hide_index=True, use_container_width=True)
+            hide_index=True, width="stretch")
 
         asset_cves = cves[cves["ip_address"] == ip]
 
@@ -1533,7 +1687,7 @@ if tab_detail is not None:
             st.dataframe(
                 known[["cve_id", "product", "installed_version", "cvss_score",
                        "published_date", "kev_date_added", "match_confidence", "ports"]],
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={"published_date": st.column_config.DateColumn("Published"),
                                "kev_date_added": st.column_config.DateColumn("Added to KEV")})
 
@@ -1568,7 +1722,7 @@ if tab_detail is not None:
                 tier_labels = tier_bars.mark_text(align="left", dx=6, fontWeight="bold").encode(
                     text="cves:Q", color=alt.value("#7a8591"))
                 st.altair_chart((tier_bars + tier_labels).properties(height=240),
-                                use_container_width=True)
+                                width="stretch")
                 st.caption("Tiers: Critical = top 1% of predicted risk, High = next 4%, "
                            "Medium = next 15%, Low = rest.")
 
@@ -1589,7 +1743,7 @@ if tab_detail is not None:
                              alt.Tooltip("probability:Q", title="Probability", format=".2%"),
                              alt.Tooltip("tier:N", title="Risk tier")],
                 )
-                st.altair_chart(scatter.properties(height=260), use_container_width=True)
+                st.altair_chart(scatter.properties(height=260), width="stretch")
                 st.caption("CVEs high on the chart but low on CVSS are ones the model flags "
                            "that severity alone would miss.")
 
@@ -1598,7 +1752,7 @@ if tab_detail is not None:
                         "cvss_score", "probability", "tier", "risk_drivers"]]
                 .assign(tier=lambda d: d["tier"].map(with_icon))
                 .style.map(tint_level, subset=["tier"]),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "published_date": st.column_config.DateColumn("Published"),
                     "cvss_score": st.column_config.NumberColumn("CVSS", format="%.1f"),
@@ -1634,7 +1788,7 @@ if tab_detail is not None:
                 .properties(height=36 * len(top))
             )
 
-            st.altair_chart(chart, use_container_width=True)
+            st.altair_chart(chart, width="stretch")
             st.caption(f"Description (exploitation-status sentences removed): {description}")
 
         # ---- Other matches ----
@@ -1655,7 +1809,7 @@ if tab_detail is not None:
                 pd.concat([older, unconfirmed, inferred]).drop_duplicates("cve_id")
                 [["cve_id", "product", "installed_version", "status", "match_confidence",
                   "published_date", "cvss_score"]],
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={"published_date": st.column_config.DateColumn("Published")})
 
 
@@ -1731,7 +1885,7 @@ if tab_paths is not None:
                 "<span><b>──</b> exploit &nbsp; <b>- -</b> trust link</span></div>",
                 unsafe_allow_html=True)
 
-            st.graphviz_chart(dot, use_container_width=True)
+            st.graphviz_chart(dot, width="stretch")
             st.caption("Arrows show the most likely route to each reached asset. Percentages are "
                        "the probability of that route succeeding: each step multiplies the chance "
                        "of exploiting the next host (1.0 for a known exploited vulnerability, the "
@@ -1758,7 +1912,7 @@ if tab_paths is not None:
                              alt.Tooltip("assets:Q", title="Assets in subnet"),
                              alt.Tooltip("highest_probability:Q", title="Highest probability", format=".0%")],
                 )
-                st.altair_chart(seg_chart.properties(height=230), use_container_width=True)
+                st.altair_chart(seg_chart.properties(height=230), width="stretch")
 
             with fix_col:
                 st.markdown("**Best single fixes**")
@@ -1769,7 +1923,7 @@ if tab_paths is not None:
                     fixes["share_cut"] = (fixes["risk_reduction"] / scenario.crown_risk) if scenario.crown_risk else 0
                     st.dataframe(
                         fixes[["action", "type", "share_cut", "assets_reached_after"]],
-                        hide_index=True, use_container_width=True,
+                        hide_index=True, width="stretch",
                         column_config={
                             "action": st.column_config.TextColumn("Action", width="large"),
                             "type": "Type",
@@ -1790,7 +1944,7 @@ if tab_paths is not None:
                 .style.map(lambda b: f"background-color: {PATH_COLORS.get(b, '')}; "
                                      f"color: {'#1b1b1b' if b in ('Unlikely', 'Not reached') else '#ffffff'}; "
                                      "font-weight: 700" if b in PATH_COLORS else "", subset=["band"]),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "asset": "Asset", "segment": "Subnet", "asset_type": "Type",
                     "probability": st.column_config.ProgressColumn(
@@ -1805,13 +1959,13 @@ if tab_paths is not None:
                            "the synthetic organisation. In the VMware lab they come from the real "
                            "configuration and can be verified by scanning from each subnet.")
                 st.markdown("**Firewall rules**")
-                st.dataframe(rules, hide_index=True, use_container_width=True)
+                st.dataframe(rules, hide_index=True, width="stretch")
                 st.markdown("**Trust links**")
                 names = path_inventory.set_index("asset_id")["hostname"]
                 st.dataframe(
                     trusts.assign(source_asset=trusts["source_asset"].map(names),
                                   target_asset=trusts["target_asset"].map(names)),
-                    hide_index=True, use_container_width=True)
+                    hide_index=True, width="stretch")
 
 
 # ==============================
@@ -1862,7 +2016,7 @@ if tab_fix is not None:
             )
             marker = alt.Chart(pd.DataFrame({"x": [budget]})).mark_rule(
                 strokeDash=[6, 4], color="#b71c1c", strokeWidth=2).encode(x="x:Q")
-            st.altair_chart((line + dots + marker).properties(height=300), use_container_width=True)
+            st.altair_chart((line + dots + marker).properties(height=300), width="stretch")
             st.caption("Each step is the next fix in the plan. The curve flattens as the most dangerous "
                        "fixes are done first: the red line marks the selected amount of work.")
 
@@ -1870,7 +2024,7 @@ if tab_fix is not None:
             st.dataframe(
                 chosen[["step", "hostname", "action", "cves_fixed", "kev_fixed", "risk_removed",
                         "deadline", "urgency"]].style.map(URGENCY_STYLE, subset=["urgency"]),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "step": st.column_config.NumberColumn("#", width="small"),
                     "hostname": "Asset",
@@ -1909,7 +2063,7 @@ if tab_fix is not None:
 
             with st.expander(f"All {len(plan_all)} possible fixes"):
                 st.dataframe(plan_all.drop(columns=["fixed_cve_ids"]), hide_index=True,
-                             use_container_width=True)
+                             width="stretch")
 
 
 # ==============================
@@ -1969,7 +2123,7 @@ if tab_live is not None:
                                subset=["level"])
                     .map(lambda v: "color: #b71c1c; font-weight: 700" if v == "OVERDUE" else "",
                          subset=["status"]),
-                    hide_index=True, use_container_width=True,
+                    hide_index=True, width="stretch",
                     column_config={
                         "level": "Level", "status": "Status", "cve_id": "CVE", "product": "Product",
                         "asset_count": st.column_config.NumberColumn("Assets"),
@@ -1993,7 +2147,7 @@ if tab_live is not None:
                     st.dataframe(
                         new_cves.head(25).assign(tier=lambda d: d["tier"].map(with_icon))
                         .style.map(tint_level, subset=["tier"]),
-                        hide_index=True, use_container_width=True,
+                        hide_index=True, width="stretch",
                         column_config={
                             "cve_id": "CVE", "published_date": "Published", "vendor": "Vendor",
                             "product": "Product", "cvss_score": st.column_config.NumberColumn("CVSS", format="%.1f"),
@@ -2004,7 +2158,7 @@ if tab_live is not None:
                         })
 
             with st.expander("Sync history"):
-                st.dataframe(sync_log.iloc[::-1], hide_index=True, use_container_width=True)
+                st.dataframe(sync_log.iloc[::-1], hide_index=True, width="stretch")
 
 
 # ==============================
@@ -2041,7 +2195,7 @@ if tab_model is not None:
             .encode(text=alt.Text("hit_rate:Q", format=".1%"))
         average_line = alt.Chart(pd.DataFrame({"x": [average]})).mark_rule(
             color="#94a3b8", strokeDash=[4, 4]).encode(x="x:Q")
-        st.altair_chart((bars + text + average_line).properties(height=170), use_container_width=True)
+        st.altair_chart((bars + text + average_line).properties(height=170), width="stretch")
         st.caption(f"Dashed line = average ({average:.1%} of all vulnerabilities were later attacked). "
                    "The labels mean what they say: Critical really is dangerous, Low really is safer.")
 
@@ -2056,7 +2210,7 @@ if tab_model is not None:
             c1.markdown(kpi_card("Our AI", f"{round(at5['Our model'] * 100)} of 100",
                                  "free public data, explains every result", AI), unsafe_allow_html=True)
             c2.markdown(kpi_card("Industry standard (EPSS)", f"{round(at5['EPSS (industry standard)'] * 100)} of 100",
-                                 "partly private, paid data", OTHER), unsafe_allow_html=True)
+                                 "free to use, but built on partly private data", OTHER), unsafe_allow_html=True)
             c3.markdown(kpi_card("Usual way (CVSS score)", f"{round(at5['CVSS score (usual practice)'] * 100)} of 100",
                                  "severity only", GREY), unsafe_allow_html=True)
             st.success("**As accurate as the industry standard, and about 3× better than the usual way**, "
@@ -2078,7 +2232,7 @@ if tab_model is not None:
         reason_chart = alt.Chart(groups).mark_bar(cornerRadiusEnd=6, height=24, color=AI).encode(
             y=alt.Y("reason:N", sort="-x", title=None, axis=alt.Axis(labelLimit=420)),
             x=alt.X("share:Q", title="Share of the AI's decision", axis=alt.Axis(format="%")))
-        st.altair_chart(reason_chart.properties(height=230), use_container_width=True)
+        st.altair_chart(reason_chart.properties(height=230), width="stretch")
         st.caption("These match what security experts look for, so the AI is not using hidden shortcuts.")
 
         # 4. Does it stay accurate?
@@ -2113,7 +2267,7 @@ if tab_model is not None:
                 "recall_top_1pct", "recall_top_5pct"]]
 
             st.dataframe(
-                test, hide_index=True, use_container_width=True,
+                test, hide_index=True, width="stretch",
                 column_config={
                     "model": "Model",
                     "pr_auc": st.column_config.NumberColumn("PR-AUC", format="%.3f"),
@@ -2156,7 +2310,7 @@ if tab_model is not None:
 
             st.dataframe(
                 tiers[["tier", "cves", "share_of_cves", "exploited", "hit_rate", "share_of_exploited", "lift"]],
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "tier": "Tier", "cves": "CVEs", "exploited": "Exploited",
                     "share_of_cves": st.column_config.NumberColumn("Share of CVEs", format="percent"),
@@ -2173,7 +2327,7 @@ if tab_model is not None:
                            "publication, so EPSS sees up to 7 days more than the model.")
                 bench = pd.read_csv(bench_dir / "benchmark.csv")
                 st.dataframe(
-                    bench, hide_index=True, use_container_width=True,
+                    bench, hide_index=True, width="stretch",
                     column_config={
                         "model": "Method",
                         "pr_auc": st.column_config.NumberColumn("PR-AUC", format="%.3f"),
@@ -2192,7 +2346,7 @@ if tab_model is not None:
                     sig[["comparison", "metric", "difference", "ci_low", "ci_high", "p_value", "result"]]
                     .style.map(lambda v: "color: #137a13; font-weight: 700" if str(v).startswith("✓") else "",
                                subset=["result"]),
-                    hide_index=True, use_container_width=True,
+                    hide_index=True, width="stretch",
                     column_config={
                         "comparison": st.column_config.TextColumn("Comparison", width="large"),
                         "metric": "Metric",
@@ -2219,7 +2373,7 @@ if tab_model is not None:
                 st.dataframe(
                     drift[["period", "role", "cves", "expected_so_far", "actual_kev",
                            "follow_up_elapsed", "expected_to_actual"]],
-                    hide_index=True, use_container_width=True,
+                    hide_index=True, width="stretch",
                     column_config={
                         "period": "Published", "role": "Role", "cves": "CVEs",
                         "expected_so_far": st.column_config.NumberColumn("Expected so far", format="%.1f"),
@@ -2243,7 +2397,7 @@ if tab_model is not None:
                          "Retrained model (challenger)": v["challenger"],
                          "Winner": "Challenger" if v["challenger_wins"] else "Champion"}
                         for m, v in decision["evidence"].items()])
-                    st.dataframe(evidence, hide_index=True, use_container_width=True)
+                    st.dataframe(evidence, hide_index=True, width="stretch")
                     st.caption("The retrained model is trained on CVEs to August 2024 and calibrated on the "
                                "latest 12 labelled months. It is promoted only if it wins on the primary "
                                "metrics on CVEs neither model has seen. Reported research results always "
@@ -2298,7 +2452,7 @@ if tab_backtest is not None:
                 "outcome_window": "Exposed via a scored CVE",
                 "outcome_any": "Exposed via any CVE"})
             st.dataframe(
-                metrics, hide_index=True, use_container_width=True,
+                metrics, hide_index=True, width="stretch",
                 column_config={
                     "target": "Outcome", "ranker": "Ranking method",
                     "positives": "Exposed assets", "assets": "Assets",
@@ -2320,7 +2474,7 @@ if tab_backtest is not None:
                     "asset_id", "hostname", "known_exploited", "expected_exploited_12m",
                     "product_kev_rate_12m", "max_cve_probability", "max_cvss",
                     "exploited_window", "exploited_older", "exploited_new"]],
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={
                     "known_exploited": "Known exploited at snapshot",
                     "expected_exploited_12m": st.column_config.NumberColumn(
@@ -2349,7 +2503,7 @@ if tab_admin is not None:
             users.assign(role=users["role"].map(role_name),
                          mfa_enabled=users["mfa_enabled"].map({1: "✓ Enrolled", 0: "Not set up"}),
                          active=users["active"].map({1: "Active", 0: "Disabled"})),
-            hide_index=True, use_container_width=True,
+            hide_index=True, width="stretch",
             column_config={"username": "Username", "display_name": "Name", "email": "Email",
                            "role": "Role", "team": "Team", "mfa_enabled": "MFA",
                            "must_change_password": "Must change password",
@@ -2398,7 +2552,7 @@ if tab_admin is not None:
                 if target:
                     b1, b2, b3 = st.columns(3)
                     target_row = users.set_index("username").loc[target]
-                    if b1.button("Reset password", use_container_width=True):
+                    if b1.button("Reset password", width="stretch"):
                         temp = temporary_password()
                         auth_store.update_user(target, password_hash=hash_password(temp),
                                                must_change_password=1, failed_attempts=0,
@@ -2406,12 +2560,12 @@ if tab_admin is not None:
                         audit("password_reset", user["username"], user["role"], target)
                         st.success("Temporary password (shown once):")
                         st.code(temp)
-                    if b2.button("Reset MFA", use_container_width=True):
+                    if b2.button("Reset MFA", width="stretch"):
                         auth_store.update_user(target, totp_secret=None, mfa_enabled=0,
                                                last_totp_counter=None)
                         audit("mfa_reset", user["username"], user["role"], target)
                         st.success(f"{target} will set up MFA again at next sign-in.")
-                    if b3.button("Unlock", use_container_width=True):
+                    if b3.button("Unlock", width="stretch"):
                         auth_store.update_user(target, failed_attempts=0, locked_until=None)
                         audit("account_unlocked", user["username"], user["role"], target)
                         st.success(f"{target} unlocked.")
@@ -2420,7 +2574,7 @@ if tab_admin is not None:
                     new_target_role = role_col.selectbox(
                         "Role", list(ROLES), index=list(ROLES).index(target_row["role"]),
                         format_func=role_name, key="change_role")
-                    if apply_col.button("Apply role", use_container_width=True) \
+                    if apply_col.button("Apply role", width="stretch") \
                             and new_target_role != target_row["role"]:
                         auth_store.update_user(target, role=new_target_role)
                         audit("role_changed", user["username"], user["role"],
@@ -2441,7 +2595,7 @@ if tab_admin is not None:
         st.dataframe(
             ownership.groupby(["lab", "team", "team_email"])["asset_id"]
             .agg(assets="count", ids=lambda ids: ", ".join(sorted(ids))).reset_index(),
-            hide_index=True, use_container_width=True,
+            hide_index=True, width="stretch",
             column_config={"lab": "Lab", "team": "Team", "team_email": "Team email",
                            "assets": "Assets", "ids": "Asset IDs"})
 
@@ -2464,7 +2618,7 @@ if tab_admin is not None:
             .assign(entry_hash=lambda d: d["entry_hash"].str.slice(0, 12) + "…")
             .style.map(lambda v: "color: #b71c1c; font-weight: 700" if v == "failure" else "",
                        subset=["outcome"]),
-            hide_index=True, use_container_width=True,
+            hide_index=True, width="stretch",
             column_config={"at": "Time (UTC)", "username": "User", "role": "Role",
                            "action": "Action", "detail": "Detail", "outcome": "Outcome",
                            "entry_hash": "Hash"})
@@ -2498,7 +2652,7 @@ if tab_notify is not None:
                 .style.map(tint_level, subset=["exposure_level"])
                 .map(lambda v: "color: #b71c1c; font-weight: 700" if v == "Not notified" else
                      "color: #137a13; font-weight: 700" if v == "Notified" else "", subset=["status"]),
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={"hostname": "Device", "asset_type": "Type",
                                "exposure_level": "Exposure", "actions": "Fixes",
                                "exploited": "Exploited CVEs", "overdue": "Overdue fixes",
@@ -2599,7 +2753,7 @@ if tab_notify is not None:
             st.dataframe(
                 notify_history[["sent_at", "hostname", "team", "recipients", "subject", "actions",
                                 "exploited", "sender", "delivery"]],
-                hide_index=True, use_container_width=True,
+                hide_index=True, width="stretch",
                 column_config={"sent_at": "Sent (UTC)", "hostname": "Device", "team": "Team",
                                "recipients": "Recipients", "subject": "Subject",
                                "actions": "Fixes", "exploited": "Exploited", "sender": "Sent by",
@@ -2646,7 +2800,7 @@ if tab_compare is not None:
                                 scale=alt.Scale(domain=["Our system", "Usual way (CVSS)"], range=[OURS, USUAL])))
             labels = chart.mark_text(align="left", dx=6, fontWeight="bold", fontSize=15, color="#e2e8f0") \
                 .encode(text=alt.Text("found:Q", format=".0%"))
-            st.altair_chart((chart + labels).properties(height=120), use_container_width=True)
+            st.altair_chart((chart + labels).properties(height=120), width="stretch")
             st.success(f"**About {ours5 / cvss5:.0f}× more dangerous vulnerabilities found for the same "
                        "amount of work.** This result is statistically significant.")
 
@@ -2712,7 +2866,7 @@ if tab_compare is not None:
                                     legend=alt.Legend(orient="bottom")),
                     tooltip=["method", alt.Tooltip("share_reviewed:Q", format=".1%"),
                              alt.Tooltip("share_caught:Q", format=".1%")])
-                st.altair_chart(line.properties(height=300), use_container_width=True)
+                st.altair_chart(line.properties(height=300), width="stretch")
                 st.caption("EPSS (partly private data) finds slightly more in the top 1–3%; our model "
                            "finds more from 5% upwards; overall the two are statistically equal "
                            "(p = 0.86). Versus CVSS, the top-5% result is significant (p < 0.001).")
@@ -2725,7 +2879,7 @@ if tab_compare is not None:
                     color=alt.Color("plan:N", title=None, sort=PLANS,
                                     scale=alt.Scale(domain=list(plan_colours), range=list(plan_colours.values())),
                                     legend=alt.Legend(orient="bottom")))
-                st.altair_chart(steps.properties(height=260), use_container_width=True)
+                st.altair_chart(steps.properties(height=260), width="stretch")
                 st.caption("A device counts as exposed while any software on it has a vulnerability CISA "
                            "lists as actively exploited. Criticality plan = most important device first.")
             if metrics_path.exists():

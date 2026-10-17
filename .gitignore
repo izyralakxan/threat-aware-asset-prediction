@@ -15,6 +15,14 @@ data/notifications/
 *.eml
 # live-sync downloads (rebuilt automatically every 6 hours)
 data/live/
+# operational records: fix tracking, network watch
+data/remediation_tracker.csv
+data/lab/watch_state.json
+data/lab/watch_events.csv
+data/lab/watch.log
+data/lab/scans/_watch_discovery.xml
+# test scans moved out of the dashboard list
+data/lab/scans/archive/
 .streamlit/secrets.toml
 
 # Office lock files and local tooling

@@ -9,10 +9,14 @@
 #   isolate    disconnect the Alpine VMs' internet (NAT) adapter: lab is fully offline
 #   internet   reconnect it (only while installing software)
 #   eject      remove the Alpine installer ISO after installation (VM powered off)
+#   rogue-on   start rogue-01 (192.168.56.120), a device NOT in the asset list: the network
+#              watcher flags it as an unknown device within about a minute (demo)
+#   rogue-off  power rogue-01 off again (after 3 missed checks it counts as removed, so
+#              the next rogue-on raises a new alert)
 
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("start", "stop", "status", "console", "isolate", "internet", "eject")]
+    [ValidateSet("start", "stop", "status", "console", "isolate", "internet", "eject", "rogue-on", "rogue-off")]
     [string]$Action,
     [string]$Vm
 )
@@ -69,5 +73,13 @@ switch ($Action) {
             & $vbox modifyvm $name --boot1 disk --boot2 none | Out-Null
             Write-Host "$name installer ISO removed"
         }
+    }
+    "rogue-on" {
+        if ($running -contains "rogue-01") { Write-Host "rogue-01 already running" }
+        else { & $vbox startvm rogue-01 --type headless | Out-Null; Write-Host "rogue-01 started: the watcher should flag 192.168.56.120 within about a minute" }
+    }
+    "rogue-off" {
+        if ($running -contains "rogue-01") { & $vbox controlvm rogue-01 poweroff | Out-Null }
+        Write-Host "rogue-01 is off"
     }
 }

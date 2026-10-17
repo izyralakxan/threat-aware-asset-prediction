@@ -7,6 +7,9 @@ Safety controls
   - Nmap is started directly (no shell), with a fixed argument list, so a
     target string cannot inject commands
   - unprivileged TCP connect scan: no administrator rights needed
+  - the full scan also runs a few SAFE Nmap check scripts that read settings
+    (anonymous FTP, SMBv1, empty database passwords, expired certificates...;
+    see src/asset_exposure/misconfig.py). None of them exploit anything
   - time limit (timeout_seconds); the result is saved as Nmap XML in
     data/lab/scans/ and imported by the same parser as uploaded scans
 
@@ -24,6 +27,8 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
 
+from src.asset_exposure.misconfig import SAFE_CHECKS
+
 CONFIG_FILE = Path("config/scan_targets.json")
 DEFAULT_NMAP_PATHS = [Path(r"C:\Program Files (x86)\Nmap\nmap.exe"), Path(r"C:\Program Files\Nmap\nmap.exe")]
 
@@ -33,9 +38,10 @@ PORTS = ("1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,543
          "5985,6000,6379,6667,7001,8000,8009,8080,8081,8180,8443,8888,9000,9090,9200,11211,27017")
 
 PROFILES = {
-    # Service and version detection: what the exposure assessment needs
+    # Service and version detection (what the exposure assessment needs) plus the
+    # safe settings checks (unsafe settings / misconfigurations)
     "full": ["--unprivileged", "-sT", "-sV", "--version-intensity", "7", "-T4", "-p", PORTS,
-             "-PS21,22,80,443,445,3306,6379,8080"],
+             "-PS21,22,80,443,445,3306,6379,8080", "--script", SAFE_CHECKS],
     # Which hosts are up (no services, so nothing to assess)
     "discovery": ["--unprivileged", "-sn", "-T4", "-PS21,22,80,443,445,3306,6379,8080"],
 }

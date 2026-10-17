@@ -218,30 +218,51 @@ def overview(asset, actions, details):
 # Composing the message
 # ==============================
 
-def compose(asset, actions, sender, team, note="", containment=None, config=None, details=None):
-    """Subject, plain-text and HTML body for one device (details: vulnerability_details())."""
+def compose(asset, actions, sender, team, note="", containment=None, config=None, details=None,
+            settings=None):
+    """Subject, plain-text and HTML body for one device (details: vulnerability_details();
+    settings: unsafe settings found on the device by the scan, src/asset_exposure/misconfig.py)."""
     config = config or load_config()
+    settings = settings if settings is not None else pd.DataFrame(columns=["severity"])
     limit = config["max_cves_listed_per_action"]
     overdue = int((actions["urgency"] == "OVERDUE").sum())
     exploited = int(actions["kev_fixed"].sum())
 
     status = (f"{overdue} overdue" if overdue else
               f"{exploited} actively exploited" if exploited else f"{asset['exposure_level']} risk")
-    subject = (f"[Action required] {asset['hostname']}: {len(actions)} security "
-               f"fix{'es' if len(actions) != 1 else ''} ({status})")
+    total = len(actions) + len(settings)
+    subject = (f"[Action required] {asset['hostname']}: {total} security "
+               f"fix{'es' if total != 1 else ''} ({status})")
 
-    items = []
-    for number, a in enumerate(actions.itertuples(index=False), start=1):
+    # Unsafe settings: Critical ones come before the updates, the rest after
+    due = {"Critical": 1, "High": 7, "Medium": 30, "Low": 90}
+    today = pd.Timestamp.now().normalize()
+
+    def setting_item(s):
+        return {"action": f"Fix unsafe setting: {s.finding} (port {s.ports}). {s.fix}",
+                "why": s.risk.rstrip("."), "ref": "", "ref_label": "",
+                # The tracked fix-by date when known (the dashboard shows the same one)
+                "deadline": getattr(s, "deadline", "") or
+                            (today + pd.Timedelta(days=due.get(s.severity, 30))).strftime("%Y-%m-%d"),
+                "overdue": False}
+
+    first = [setting_item(s) for s in settings.itertuples(index=False) if s.severity == "Critical"]
+    later = [setting_item(s) for s in settings.itertuples(index=False) if s.severity != "Critical"]
+    items = list(first)
+    for a in actions.itertuples(index=False):
         cves = a.fixed_cve_ids.split(";")
         shown = ", ".join(cves[:limit]) + (f" and {len(cves) - limit} more" if len(cves) > limit else "")
         why = (f"fixes {a.cves_fixed} known vulnerabilit{'ies' if a.cves_fixed != 1 else 'y'}"
                + (f", including {a.kev_fixed} actively exploited by attackers (CISA KEV)"
                   if a.kev_fixed else ""))
-        items.append({"n": number, "action": a.action, "why": why, "cves": shown,
+        items.append({"action": a.action, "why": why, "ref": shown, "ref_label": "CVEs",
                       "deadline": a.deadline, "overdue": a.urgency == "OVERDUE"})
+    items += later
+    for number, item in enumerate(items, start=1):
+        item["n"] = number
 
     contain = [] if containment is None or containment.empty else containment["action"].head(2).tolist()
-    summary = overview(asset, actions, details) if details else None
+    summary = overview(asset, actions, details) if details and not actions.empty else None
 
     # ---- Plain text ----
     lines = [
@@ -259,7 +280,7 @@ def compose(asset, actions, sender, team, note="", containment=None, config=None
     for item in items:
         lines += [f"{item['n']}. {item['action']}",
                   f"   Why: {item['why']}.",
-                  f"   CVEs: {item['cves']}",
+                  *([f"   {item['ref_label']}: {item['ref']}"] if item["ref"] else []),
                   f"   Deadline: {item['deadline']}{'  (OVERDUE)' if item['overdue'] else ''}", ""]
     if details and details["rows"]:
         lines += [f"VULNERABILITY DETAILS (top {len(details['rows'])} of {details['total']})", ""]
@@ -291,8 +312,9 @@ def compose(asset, actions, sender, team, note="", containment=None, config=None
     rows = "".join(
         f"<tr><td style='padding:10px;border-bottom:1px solid #e3e8e6;vertical-align:top;"
         f"font-weight:700'>{i['n']}</td><td style='padding:10px;border-bottom:1px solid #e3e8e6'>"
-        f"<b>{esc(i['action'])}</b><br><span style='color:#4a5862'>Why: {esc(i['why'])}.</span><br>"
-        f"<span style='color:#4a5862;font-size:12px'>CVEs: {esc(i['cves'])}</span></td>"
+        f"<b>{esc(i['action'])}</b><br><span style='color:#4a5862'>Why: {esc(i['why'])}.</span>"
+        + (f"<br><span style='color:#4a5862;font-size:12px'>{esc(i['ref_label'])}: {esc(i['ref'])}</span>"
+           if i["ref"] else "") + "</td>"
         f"<td style='padding:10px;border-bottom:1px solid #e3e8e6;white-space:nowrap;vertical-align:top;"
         f"{'color:#b71c1c;font-weight:700' if i['overdue'] else ''}'>{esc(i['deadline'])}"
         f"{'<br>OVERDUE' if i['overdue'] else ''}</td></tr>" for i in items)
@@ -381,7 +403,7 @@ It never asks for passwords or sign-in codes and has no attachments.
 Do not forward outside the organisation.</p></div></div>"""
 
     return {"subject": subject, "text": text, "html": html_body,
-            "actions": len(actions), "exploited": exploited}
+            "actions": total, "exploited": exploited}
 
 
 # ==============================

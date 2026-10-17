@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
 <?xml-stylesheet href="file:///C:/Program Files (x86)/Nmap/nmap.xsl" type="text/xsl"?>
-<!-- Nmap 7.95 scan initiated Mon Oct 12 11:02:58 2026 as: &quot;C:\\Program Files (x86)\\Nmap\\nmap.EXE&quot; -&#45;unprivileged -sT -sV -&#45;version-intensity 7 -T4 -p 1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,5432,5601,5900,5985,6000,6379,6667,7001,8000,8009,8080,8081,8180,8443,8888,9000,9090,9200,11211,27017 -PS21,22,80,443,445,3306,6379,8080 -oX data\\lab\\scans\\scan-20261012-110258-full.xml 192.168.56.101-103 -->
-<nmaprun scanner="nmap" args="&quot;C:\\Program Files (x86)\\Nmap\\nmap.EXE&quot; -&#45;unprivileged -sT -sV -&#45;version-intensity 7 -T4 -p 1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,5432,5601,5900,5985,6000,6379,6667,7001,8000,8009,8080,8081,8180,8443,8888,9000,9090,9200,11211,27017 -PS21,22,80,443,445,3306,6379,8080 -oX data\\lab\\scans\\scan-20261012-110258-full.xml 192.168.56.101-103" start="1791783178" startstr="Mon Oct 12 11:02:58 2026" version="7.95" xmloutputversion="1.05">
+<!-- Nmap 7.95 scan initiated Sat Oct 17 23:23:47 2026 as: &quot;C:\\Program Files (x86)\\Nmap\\nmap.EXE&quot; -&#45;unprivileged -sT -sV -&#45;version-intensity 7 -T4 -p 1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,5432,5601,5900,5985,6000,6379,6667,7001,8000,8009,8080,8081,8180,8443,8888,9000,9090,9200,11211,27017 -PS21,22,80,443,445,3306,6379,8080 -oX data\\lab\\scans\\scan-20261017-232347-full.xml 192.168.56.101-103 -->
+<nmaprun scanner="nmap" args="&quot;C:\\Program Files (x86)\\Nmap\\nmap.EXE&quot; -&#45;unprivileged -sT -sV -&#45;version-intensity 7 -T4 -p 1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,5432,5601,5900,5985,6000,6379,6667,7001,8000,8009,8080,8081,8180,8443,8888,9000,9090,9200,11211,27017 -PS21,22,80,443,445,3306,6379,8080 -oX data\\lab\\scans\\scan-20261017-232347-full.xml 192.168.56.101-103" start="1792259627" startstr="Sat Oct 17 23:23:47 2026" version="7.95" xmloutputversion="1.05">
 <scaninfo type="connect" protocol="tcp" numservices="1056" services="1-1024,1099,1433,1521,1524,2049,2121,2375,3000,3306,3389,3632,5000,5432,5601,5900,5985,6000,6379,6667,7001,8000,8009,8080-8081,8180,8443,8888,9000,9090,9200,11211,27017"/>
 <verbose level="0"/>
 <debugging level="0"/>
@@ -21,12 +21,12 @@
 <hostnames>
 </hostnames>
 </hosthint>
-<host starttime="1791783179" endtime="1791783232"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<host starttime="1792259628" endtime="1792259681"><status state="up" reason="syn-ack" reason_ttl="0"/>
 <address addr="192.168.56.101" addrtype="ipv4"/>
 <hostnames>
 </hostnames>
-<ports><extraports state="filtered" count="1032">
-<extrareasons reason="no-response" count="1032" proto="tcp" ports="1-20,24,26-52,54-79,81-110,112-138,140-444,446-511,515-1024,1433,1521,2375,3000,3389,5000,5601,5985,6379,7001,8000,8080-8081,8443,8888,9000,9090,9200,11211,27017"/>
+<ports><extraports state="filtered" count="1033">
+<extrareasons reason="no-response" count="1033" proto="tcp" ports="1-20,24,26-52,54-79,81-110,112-138,140-444,446-511,515-1024,1433,1521,2121,2375,3000,3389,5000,5601,5985,6379,7001,8000,8080-8081,8443,8888,9000,9090,9200,11211,27017"/>
 </extraports>
 <port protocol="tcp" portid="21"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ftp" product="vsftpd" version="2.3.4" ostype="Unix" method="probed" conf="10"><cpe>cpe:/a:vsftpd:vsftpd:2.3.4</cpe></service></port>
 <port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="4.7p1 Debian 8ubuntu1" extrainfo="protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:4.7p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
@@ -43,7 +43,6 @@
 <port protocol="tcp" portid="1099"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="java-rmi" product="GNU Classpath grmiregistry" method="probed" conf="10"/></port>
 <port protocol="tcp" portid="1524"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="bindshell" product="Bash shell" extrainfo="**BACKDOOR**; root shell" hostname="legacy-srv-01" method="probed" conf="10"><cpe>cpe:/a:gnu:bash</cpe></service></port>
 <port protocol="tcp" portid="2049"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="nfs" version="2-4" extrainfo="RPC #100003" method="probed" conf="10"/></port>
-<port protocol="tcp" portid="2121"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ftp" product="ProFTPD" version="1.3.1" ostype="Unix" method="probed" conf="10"><cpe>cpe:/a:proftpd:proftpd:1.3.1</cpe></service></port>
 <port protocol="tcp" portid="3306"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="mysql" product="MySQL" version="5.0.51a-3ubuntu5" method="probed" conf="10"><cpe>cpe:/a:mysql:mysql:5.0.51a-3ubuntu5</cpe></service></port>
 <port protocol="tcp" portid="3632"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="distccd" product="distccd" version="v1" extrainfo="(GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4)" method="probed" conf="10"/></port>
 <port protocol="tcp" portid="5432"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="postgresql" product="PostgreSQL DB" version="8.3.0 - 8.3.7" method="probed" conf="10"><cpe>cpe:/a:postgresql:postgresql:8.3</cpe></service></port>
@@ -53,9 +52,9 @@
 <port protocol="tcp" portid="8009"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ajp13" product="Apache Jserv" extrainfo="Protocol v1.3" method="probed" conf="10"/></port>
 <port protocol="tcp" portid="8180"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache Tomcat/Coyote JSP engine" version="1.1" method="probed" conf="10"><cpe>cpe:/a:apache:coyote_http_connector:1.1</cpe></service></port>
 </ports>
-<times srtt="882" rttvar="1121" to="100000"/>
+<times srtt="819" rttvar="943" to="100000"/>
 </host>
-<host starttime="1791783179" endtime="1791783232"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<host starttime="1792259628" endtime="1792259681"><status state="up" reason="syn-ack" reason_ttl="0"/>
 <address addr="192.168.56.102" addrtype="ipv4"/>
 <hostnames>
 </hostnames>
@@ -65,11 +64,11 @@
 <port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="10.3" extrainfo="protocol 2.0" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:10.3</cpe></service></port>
 <port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache httpd" version="2.4.62" extrainfo="(Unix)" method="probed" conf="10"><cpe>cpe:/a:apache:http_server:2.4.62</cpe></service></port>
 <port protocol="tcp" portid="6379"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="redis" product="Redis key-value store" version="7.2.4" method="probed" conf="10"><cpe>cpe:/a:redislabs:redis:7.2.4</cpe></service></port>
-<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache Tomcat" version="9.0.98" method="probed" conf="10"><cpe>cpe:/a:apache:tomcat:9.0.98</cpe></service></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache Tomcat" version="9.0.123" method="probed" conf="10"><cpe>cpe:/a:apache:tomcat:9.0.123</cpe></service></port>
 </ports>
-<times srtt="1449" rttvar="1863" to="100000"/>
+<times srtt="2463" rttvar="3798" to="100000"/>
 </host>
-<host starttime="1791783179" endtime="1791783232"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<host starttime="1792259628" endtime="1792259681"><status state="up" reason="syn-ack" reason_ttl="0"/>
 <address addr="192.168.56.103" addrtype="ipv4"/>
 <hostnames>
 </hostnames>
@@ -78,8 +77,8 @@
 </extraports>
 <port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="10.3" extrainfo="protocol 2.0" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:10.3</cpe></service></port>
 </ports>
-<times srtt="1123" rttvar="1740" to="100000"/>
+<times srtt="2834" rttvar="4266" to="100000"/>
 </host>
-<runstats><finished time="1791783232" timestr="Mon Oct 12 11:03:52 2026" summary="Nmap done at Mon Oct 12 11:03:52 2026; 3 IP addresses (3 hosts up) scanned in 53.53 seconds" elapsed="53.53" exit="success"/><hosts up="3" down="0" total="3"/>
+<runstats><finished time="1792259681" timestr="Sat Oct 17 23:24:41 2026" summary="Nmap done at Sat Oct 17 23:24:41 2026; 3 IP addresses (3 hosts up) scanned in 53.74 seconds" elapsed="53.74" exit="success"/><hosts up="3" down="0" total="3"/>
 </runstats>
 </nmaprun>

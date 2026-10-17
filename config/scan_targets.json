@@ -2,6 +2,7 @@
   "_note": "Live Nmap scans from the dashboard may only target these ranges (your own isolated VirtualBox lab). Anything else is refused.",
   "allowed_targets": ["192.168.56.0/24", "127.0.0.1/32"],
   "default_target": "192.168.56.101-103",
+  "watch_targets": "192.168.56.100-150",
   "nmap_path": "",
   "timeout_seconds": 600,
   "output_dir": "data/lab/scans",
