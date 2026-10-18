@@ -1,0 +1,67 @@
+{
+  "test_cves": 19945,
+  "budget": "top 5% (997 CVEs)",
+  "exploited": 98,
+  "caught": 43,
+  "missed": 55,
+  "caught_profile": {
+    "count": 43,
+    "median_cvss": 8.8,
+    "share_cvss_below_7": 0.14,
+    "share_network": 0.953,
+    "share_user_interaction": 0.186,
+    "share_vendor_new_to_kev": 0.023,
+    "median_description_words": 44,
+    "top_vendors": {
+      "ivanti": 5,
+      "apple": 3,
+      "fortinet": 3,
+      "microsoft": 3,
+      "sonicwall": 2
+    }
+  },
+  "missed_profile": {
+    "count": 55,
+    "median_cvss": 8.8,
+    "share_cvss_below_7": 0.145,
+    "share_network": 0.855,
+    "share_user_interaction": 0.073,
+    "share_vendor_new_to_kev": 0.473,
+    "median_description_words": 34,
+    "top_vendors": {
+      "3ds": 3,
+      "advantive": 2,
+      "microsoft": 2,
+      "crushftp": 2,
+      "sap": 2
+    }
+  },
+  "missed_by_reason": {
+    "Vendor never in KEV before": 26,
+    "Other": 20,
+    "Needs user action or local access": 5,
+    "Looked low-severity (CVSS < 7)": 4
+  },
+  "median_days_to_kev": {
+    "caught": 33.0,
+    "missed": 14.0
+  },
+  "false_alarms_checked": 100,
+  "false_alarms_listed_later": 0,
+  "false_alarm_profile": {
+    "count": 100,
+    "median_cvss": 9.8,
+    "share_cvss_below_7": 0.11,
+    "share_network": 0.8,
+    "share_user_interaction": 0.19,
+    "share_vendor_new_to_kev": 0.14,
+    "median_description_words": 35,
+    "top_vendors": {
+      "microsoft": 16,
+      "apple": 13,
+      "google": 10,
+      "dlink": 5,
+      "fortinet": 5
+    }
+  }
+}

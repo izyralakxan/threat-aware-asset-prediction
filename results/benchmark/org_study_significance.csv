@@ -1,0 +1,19 @@
+outcome,comparison,metric,mean_difference,our_plan_better,ties,other_better,p_value,significant
+all exploited,Our plan vs CVSS plan,auc,0.14760051141958466,100,0,0,3.895460925389839e-18,True
+all exploited,Our plan vs CVSS plan,after_5,0.18344910563292913,88,9,3,1.1790256149641802e-16,True
+all exploited,Our plan vs CVSS plan,after_10,0.2290164892297245,90,10,0,8.762311493658908e-18,True
+all exploited,Our plan vs Criticality plan,auc,0.20098461244861446,100,0,0,3.896340037647931e-18,True
+all exploited,Our plan vs Criticality plan,after_5,0.12589402101166805,77,19,4,3.867920399357932e-15,True
+all exploited,Our plan vs Criticality plan,after_10,0.19271625106919227,86,14,0,1.8073416980890175e-17,True
+all exploited,Our plan vs Random,auc,0.2920724228196952,100,0,0,3.896559845095909e-18,True
+all exploited,Our plan vs Random,after_5,0.2579269854328678,100,0,0,3.893703264910611e-18,True
+all exploited,Our plan vs Random,after_10,0.3523140048268724,100,0,0,3.8945820011567e-18,True
+newly exploited,Our plan vs CVSS plan,auc,0.03669958988090836,75,1,24,1.3191342093522541e-08,True
+newly exploited,Our plan vs CVSS plan,after_5,0.028136419136419136,38,42,20,0.023546682165753646,True
+newly exploited,Our plan vs CVSS plan,after_10,0.044294427794427806,50,27,23,0.0018426769897212187,True
+newly exploited,Our plan vs Criticality plan,auc,0.16564516834749693,97,1,2,5.190436836991589e-18,True
+newly exploited,Our plan vs Criticality plan,after_5,0.15897879897879896,79,18,3,9.837894905995813e-16,True
+newly exploited,Our plan vs Criticality plan,after_10,0.21288300588300588,85,12,3,6.38531394270762e-17,True
+newly exploited,Our plan vs Random,auc,0.23665407640749436,100,0,0,3.896559845095909e-18,True
+newly exploited,Our plan vs Random,after_5,0.20321454795204796,99,0,1,4.010047756743385e-18,True
+newly exploited,Our plan vs Random,after_10,0.30518002969252966,99,0,1,4.013213730911585e-18,True

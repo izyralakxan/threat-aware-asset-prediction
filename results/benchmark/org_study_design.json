@@ -1,0 +1,12 @@
+{
+  "organisations": 100,
+  "devices_per_org": [
+    10,
+    25
+  ],
+  "device_templates": 30,
+  "decision_date": "2025-08-27",
+  "follow_up_days": 365,
+  "random_orders": 20,
+  "seed": 42
+}

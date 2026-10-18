@@ -1,0 +1,4 @@
+test_year,train_cves,train_positives,train_positives_hidden,test_cves,test_positives,test_with_epss,test_positives_with_epss
+2023,28323,70,14,28770,99,28769,99
+2024,57093,167,16,32144,109,31636,109
+2025,89237,268,24,19945,98,19944,98

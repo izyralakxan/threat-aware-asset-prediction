@@ -1,0 +1,56 @@
+cve_id,published_date,vendor,product,cvss_score,attack_vector,user_interaction,cwe,vendor_prior_kev,rank,score,kev_date_added,days_to_kev,reason
+CVE-2024-54085,2025-03-11,ami;netapp,h300s;h300s_firmware;h410c;h410c_firmware;h410s;h410s_firmware;h500s;h500s_firmware;h700s;h700s_firmware;megarac_sp-x;sg110;sg1100;sg1100_firmware;sg110_firmware;sg6160;sg6160_firmware;sgf6112;sgf6112_firmware,9.8,NETWORK,NONE,CWE-290,32,1253,0.3373720684012244,2025-06-25,106.0,Other
+CVE-2025-47812,2025-07-10,wftpserver,wing_ftp_server,10.0,NETWORK,NONE,CWE-158,0,1321,0.3256014416046835,2025-07-14,4.0,Vendor never in KEV before
+CVE-2025-2776,2025-05-07,sysaid,sysaid,9.8,NETWORK,NONE,CWE-611,1,1332,0.3233937180157099,2025-07-22,76.0,Other
+CVE-2025-24989,2025-02-19,microsoft,power_pages,9.8,NETWORK,NONE,CWE-284,402,1444,0.3080641866623832,2025-02-21,2.0,Other
+CVE-2025-6543,2025-06-25,citrix,netscaler_application_delivery_controller;netscaler_gateway,9.8,NETWORK,NONE,CWE-119,18,1446,0.3078791018108847,2025-06-30,5.0,Other
+CVE-2025-4427,2025-05-13,ivanti,endpoint_manager_mobile,7.5,NETWORK,NONE,CWE-288,28,1465,0.30541596354428996,2025-05-19,6.0,Other
+CVE-2025-24085,2025-01-27,apple,ipados;iphone_os;macos;tvos;visionos;watchos,10.0,NETWORK,NONE,CWE-416,138,1472,0.30427221194161713,2025-01-29,2.0,Other
+CVE-2025-3928,2025-04-25,commvault;linux;microsoft,commvault;linux_kernel;windows,8.8,NETWORK,NONE,,414,1577,0.29935407242489576,2025-04-28,3.0,Other
+CVE-2025-49704,2025-07-08,microsoft,sharepoint_server,8.8,NETWORK,NONE,CWE-94,424,1687,0.285621634461261,2025-07-22,14.0,Other
+CVE-2024-40891,2025-02-04,zyxel,sbg3300-n000;sbg3300-n000_firmware;sbg3300-nb00;sbg3300-nb00_firmware;sbg3500-n000_firmware;sbg3500-nb00;sbg3500-nb00_firmware;vmg1312-b10a;vmg1312-b10a_firmware;vmg1312-b10b;vmg1312-b10b_firmware;vmg1312-b10e;vmg1312-b10e_firmware;vmg3312-b10a;vmg3312-b10a_firmware;vmg3313-b10a;vmg3313-b10a_firmware;vmg3926-b10b;vmg3926-b10b_firmware;vmg4325-b10a;vmg4325-b10a_firmware;vmg4380-b10a;vmg4380-b10a_firmware;vmg8324-b10a;vmg8324-b10a_firmware;vmg8924-b10a;vmg8924-b10a_firmware,8.8,NETWORK,NONE,CWE-78,10,1760,0.27952848842556394,2025-02-11,7.0,Other
+CVE-2025-54309,2025-07-18,crushftp,crushftp,9.8,NETWORK,NONE,CWE-420,2,1876,0.26761055391695404,2025-07-22,4.0,Other
+CVE-2025-24893,2025-02-20,xwiki,xwiki,9.8,NETWORK,NONE,CWE-94;CWE-95,0,2045,0.24933880285731438,2025-10-30,252.0,Vendor never in KEV before
+CVE-2025-5777,2025-06-17,citrix,netscaler_application_delivery_controller;netscaler_gateway,7.5,NETWORK,NONE,CWE-125;CWE-457;CWE-908,18,2085,0.24599066707284079,2025-07-10,23.0,Other
+CVE-2025-0111,2025-02-12,paloaltonetworks,pan-os,6.5,NETWORK,NONE,CWE-610;CWE-73,12,2113,0.24323241152067882,2025-02-20,8.0,Looked low-severity (CVSS < 7)
+CVE-2025-31324,2025-04-24,sap,netweaver,9.8,NETWORK,NONE,CWE-434,12,2259,0.231751476244976,2025-04-29,5.0,Other
+CVE-2025-31161,2025-04-03,crushftp,crushftp,9.8,NETWORK,NONE,CWE-305,1,2543,0.2090803200313965,2025-04-07,4.0,Other
+CVE-2025-1316,2025-03-05,edimax,ic-7100;ic-7100_firmware,9.8,NETWORK,NONE,CWE-78,0,2552,0.20866518941242146,2025-03-19,14.0,Vendor never in KEV before
+CVE-2025-47827,2025-06-05,igel;microsoft,igel_os;windows_10_1507;windows_10_1607;windows_10_1809;windows_10_21h2;windows_10_22h2;windows_11_22h2;windows_11_23h2;windows_11_24h2;windows_11_25h2;windows_server_2012;windows_server_2016;windows_server_2019;windows_server_2022;windows_server_2022_23h2;windows_server_2025,4.6,PHYSICAL,NONE,CWE-347,421,2931,0.18339546548075983,2025-10-14,131.0,Looked low-severity (CVSS < 7)
+CVE-2025-8088,2025-08-08,dtsearch;microsoft;rarlab,dtsearch;windows;winrar,8.8,NETWORK,REQUIRED,CWE-35,427,3037,0.1769910422340216,2025-08-12,4.0,Needs user action or local access
+CVE-2025-5086,2025-06-02,3ds,delmia_apriso,9.0,NETWORK,NONE,CWE-502,0,3087,0.17457900942744528,2025-09-11,101.0,Vendor never in KEV before
+CVE-2025-2783,2025-03-26,google;microsoft,chrome;windows,8.3,NETWORK,REQUIRED,,411,3237,0.16723663662222568,2025-03-27,1.0,Needs user action or local access
+CVE-2025-2775,2025-05-07,sysaid,sysaid,7.5,NETWORK,NONE,CWE-611,1,3338,0.16127438355191834,2025-07-22,76.0,Other
+CVE-2025-38352,2025-07-22,debian;linux,debian_linux;linux_kernel,7.8,LOCAL,NONE,CWE-367,111,3393,0.15906282394346433,2025-09-04,44.0,Needs user action or local access
+CVE-2025-27363,2025-03-11,debian;freetype,debian_linux;freetype,8.1,NETWORK,NONE,CWE-787,103,3457,0.15531882088227036,2025-05-06,56.0,Other
+CVE-2025-42599,2025-04-18,qualitia,active\!_mail,9.8,NETWORK,NONE,CWE-121,0,3931,0.1351569347012415,2025-04-28,10.0,Vendor never in KEV before
+CVE-2025-4008,2025-05-21,smartbedded,meteobridge_firmware;meteobridge_vm,8.8,ADJACENT_NETWORK,NONE,CWE-306;CWE-77,0,4249,0.122780021925541,2025-10-02,134.0,Vendor never in KEV before
+CVE-2025-30406,2025-04-03,gladinet,centrestack,9.8,NETWORK,NONE,CWE-321;CWE-798,0,4531,0.11226251277878076,2025-04-08,5.0,Vendor never in KEV before
+CVE-2025-24016,2025-02-10,wazuh,wazuh,9.9,NETWORK,NONE,CWE-502,0,4535,0.11215567212474796,2025-06-10,120.0,Vendor never in KEV before
+CVE-2025-54948,2025-08-05,trendmicro,apex_one,9.8,NETWORK,NONE,CWE-78,10,5031,0.09637238545787247,2025-08-18,13.0,Other
+CVE-2025-54313,2025-07-19,alexghr;homarr;microsoft;prettier;un-ts,eslint-config-prettier;eslint-plugin-prettier;got-fetch;homarr;napi-postinstall;pkgr\/core;synckit;windows,7.5,NETWORK,NONE,CWE-506,424,5643,0.07901830465412425,2026-01-22,187.0,Other
+CVE-2025-6218,2025-06-21,microsoft;rarlab,windows;winrar,7.8,LOCAL,REQUIRED,CWE-22,423,6441,0.06063633675492994,2025-12-09,171.0,Needs user action or local access
+CVE-2025-6205,2025-08-04,3ds,delmia_apriso,9.1,NETWORK,NONE,CWE-862,0,6541,0.059015991173273455,2025-10-28,85.0,Vendor never in KEV before
+CVE-2025-23209,2025-01-18,craftcms,craft_cms,8.1,NETWORK,NONE,CWE-94,0,6753,0.055158118383896844,2025-02-20,33.0,Vendor never in KEV before
+CVE-2025-4632,2025-05-13,samsung,magicinfo_9_server,9.8,NETWORK,NONE,CWE-22,12,6839,0.05382713900291057,2025-05-22,9.0,Other
+CVE-2024-57727,2025-01-15,simple-help,simplehelp,7.5,NETWORK,NONE,CWE-22,0,7399,0.04896768466223375,2025-02-13,29.0,Vendor never in KEV before
+CVE-2025-31125,2025-03-31,vitejs,vite,7.5,NETWORK,NONE,CWE-200;CWE-284,0,7812,0.04400615322797862,2026-01-22,297.0,Vendor never in KEV before
+CVE-2025-1976,2025-04-24,broadcom,fabric_operating_system,6.7,LOCAL,NONE,CWE-78;CWE-94,3,8295,0.03839146056474491,2025-04-28,4.0,Looked low-severity (CVSS < 7)
+CVE-2025-6204,2025-08-04,3ds,delmia_apriso,8.0,NETWORK,NONE,CWE-94,0,8549,0.03620636761372362,2025-10-28,85.0,Vendor never in KEV before
+CVE-2025-25181,2025-02-03,advantive,veracore,7.5,NETWORK,NONE,CWE-89,0,8584,0.03590756715186791,2025-03-10,35.0,Vendor never in KEV before
+CVE-2025-0994,2025-02-06,trimble,cityworks,8.8,NETWORK,NONE,CWE-502,0,9195,0.03029975596532191,2025-02-07,1.0,Vendor never in KEV before
+CVE-2025-32975,2025-06-24,quest,kace_systems_management_appliance,10.0,NETWORK,NONE,CWE-287,1,9481,0.02752704237673101,2026-04-20,300.0,Other
+CVE-2025-21590,2025-03-12,juniper,junos,4.4,LOCAL,NONE,CWE-653,6,9802,0.025041923727791654,2025-03-13,1.0,Looked low-severity (CVSS < 7)
+CVE-2024-48248,2025-03-04,nakivo,backup_\&_replication_director,8.6,NETWORK,NONE,CWE-36,0,9893,0.02440677045279052,2025-03-19,15.0,Vendor never in KEV before
+CVE-2024-58136,2025-04-10,yiiframework,yii,9.8,NETWORK,NONE,CWE-424,0,10159,0.022668189926893026,2025-05-02,22.0,Vendor never in KEV before
+CVE-2025-0411,2025-01-25,7-zip;netapp,7-zip;active_iq_unified_manager,7.0,LOCAL,REQUIRED,CWE-693,31,11512,0.01640741719654606,2025-02-06,12.0,Needs user action or local access
+CVE-2024-57968,2025-02-03,advantive,veracore,8.8,NETWORK,NONE,CWE-434,0,11613,0.016257535391084352,2025-03-10,35.0,Vendor never in KEV before
+CVE-2025-27920,2025-05-05,srimax,output_messenger,8.8,NETWORK,NONE,CWE-24,0,12435,0.01377965979378205,2025-05-19,14.0,Vendor never in KEV before
+CVE-2025-42999,2025-05-13,sap,netweaver,9.1,NETWORK,NONE,CWE-502,13,12930,0.012386827463067594,2025-05-15,2.0,Other
+CVE-2025-30066,2025-03-15,tj-actions,changed-files,8.6,NETWORK,NONE,CWE-506,0,15285,0.006991431138047972,2025-03-18,3.0,Vendor never in KEV before
+CVE-2023-52163,2025-02-03,digiever,ds-2105_pro;ds-2105_pro\+;ds-2105_pro\+_firmware;ds-2105_pro_firmware,8.8,NETWORK,NONE,CWE-862,0,16349,0.0049229293881817736,2025-12-22,322.0,Vendor never in KEV before
+CVE-2025-30154,2025-03-19,reviewdog,action-ast-grep;action-composite-template;action-setup;action-shellcheck;action-staticcheck;action-typos,8.6,NETWORK,NONE,CWE-506,0,18373,0.002055272898217822,2025-03-24,5.0,Vendor never in KEV before
+CVE-2025-47813,2025-07-10,wftpserver,wing_ftp_server,4.3,NETWORK,NONE,CWE-209,0,19388,0.0008346135112535226,2026-03-16,249.0,Vendor never in KEV before
+CVE-2025-48927,2025-05-28,smarsh,telemessage,5.3,NETWORK,NONE,CWE-1188,0,19698,0.0005417938666342619,2025-07-01,34.0,Vendor never in KEV before
+CVE-2025-47729,2025-05-08,telemessage,text_message_archiver,4.9,NETWORK,NONE,CWE-912,0,19788,0.0004303874810388177,2025-05-12,4.0,Vendor never in KEV before
+CVE-2025-48928,2025-05-28,smarsh,telemessage,4.0,LOCAL,NONE,CWE-528;CWE-552,0,19822,0.0003875637605967889,2025-07-01,34.0,Vendor never in KEV before
